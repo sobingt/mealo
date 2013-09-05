@@ -7,15 +7,26 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , get = require('./routes/get')
+  , mealoJson = require('./routes/json')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , mysql = require('mysql')
+  , connect = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: "mealo"
+	})
+  , gm = require('googlemaps')
+  , hbs = require('hbs');
 
 var app = express();
+var parsedJSON = require('./restaurants.json');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
+app.engine('html', hbs.__express);
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -28,6 +39,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+//<<<<<<< Updated upstream
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/get', get.all);
@@ -43,12 +55,27 @@ app.get('/get/mealo/type/:type', get.mealoType);
 app.get('/get/:city/restaurants', get.cityRestaurants);
 app.get('/get/:city/mealos', get.cityMealos);
 app.get('/get/:city/mealos/:type', get.cityMealosType);
-/*
-app.get('/get/:city/users', get.cityUsers);
-*/
 app.get('/get/:city/menu/:type', get.cityMenuType);
 
+var fs = require('fs');
+//FIX ME: need a seperate function
 
+app.get('/:city/restaurants', function(req, res1) {
+var url = 'http://localhost:3000/get/'+req.params.city+'/restaurants';
+	var response = '';
+	var body = '';
+	http.get(url, function(res) {
+        res.on('data', function(chunk) {
+            body += chunk;
+        });
+		res.on('end', function() {
+            response = JSON.parse(body);
+			res1.render('restaurants', {restdata:response});
+        });
+    })
+	
+   
+});
 
 
 http.createServer(app).listen(app.get('port'), function(){

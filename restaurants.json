@@ -1,0 +1,35 @@
+{
+    "id": 1,
+    "jsonrpc": "2.0",
+    "total": 4,
+    "result": [
+        {
+            "id": 0,
+            "city": "mumbai",
+			"restaurant": "pop tates",
+            "latitude": 19.203538,
+            "longitude": 72.832779
+        },
+        {
+            "id": 1,
+            "city": "mumbai",
+			"restaurant": "pop tates",
+            "latitude": 19.147439,
+            "longitude": 72.810806
+        },
+        {
+            "id": 2,
+            "city": "mumbai",
+			"restaurant": "pop tates",
+            "latitude": 19.13706,
+            "longitude": 72.820076
+        },
+        {
+            "id": 3,
+            "city": "mumbai",
+			"restaurant": "pop tates",
+            "latitude": 19.109812,
+            "longitude": 72.884964
+        }
+    ]
+}
