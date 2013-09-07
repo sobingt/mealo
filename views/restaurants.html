@@ -31,7 +31,6 @@ function initialize() {
       mapOptions);
 	  //console.log({{total.1place}}); 
 {{#each restdata}} 
-
 	//var {{place}} = new google.maps.LatLng({{lat}}, {{lon}});
 	// Adding a Marker to the google maps.
     marker_{{id}} = new google.maps.Marker({
@@ -41,9 +40,18 @@ function initialize() {
 		position: new google.maps.LatLng({{latitude}}, {{longitude}}),
     });
 	marker_{{id}}['infowindow'] = new google.maps.InfoWindow({
-	content: 'hi'
+	content: '<b><span style="color:red">{{name}}</b><br><b>{{city}}</b>'
 	});
-google.maps.event.addListener(marker_{{id}}, 'click', function(e){toggleBounce(marker_{{id}})} );
+	var content_{{id}} = new Array();
+	content_{{id}}['id'] = {{id}};
+	content_{{id}}['name'] = "{{name}}";
+	content_{{id}}['email'] = "{{email}}";
+	content_{{id}}['phone1'] = "{{phone1}}";
+	content_{{id}}['phone2'] = "{{phone2}}";
+	content_{{id}}['phone3'] = "{{phone3}}";
+	content_{{id}}['cuisine'] = "{{cuisine}}";
+	content_{{id}}['city'] = "{{city}}";
+google.maps.event.addListener(marker_{{id}}, 'click', function(e){displayContent(content_{{id}})} );
 //info window on mouse over
 google.maps.event.addListener(marker_{{id}}, 'mouseover', function() {
     marker_{{id}}['infowindow'].open(map, this);
@@ -53,20 +61,22 @@ google.maps.event.addListener(marker_{{id}}, 'mouseout', function() {
     marker_{{id}}['infowindow'].close();
 });
 
-function toggleBounce(marker){
- if (marker.getAnimation() != null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
+function displayContent(content){
+console.log(content);
+ var ele = document.getElementById("rest-info");
+ ele.innerHTML = '';
+ var content = '<h2><b>'+content.name
+ +'</h2><h3>'+content.cuisine+'</h3><p>'+content.city+'</p><span style="color: red";>'+content.phone1+','+content.phone2+','+content.phone3+'</span><br>Email:'+content.email;
+ ele.innerHTML = content;
 }
 {{/each}}
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
-  </head>
-  <body>
-  <div id="map-canvas"></div>
-  </body>
+</head>
+<body>
+<div id="map-canvas"></div>
+<div id="rest-info"></div> 
+</body>
 </html>
