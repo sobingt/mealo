@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+
 var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
                                           password: 'root', database: 'mealo'});
 
@@ -97,17 +98,14 @@ exports.mealoType = function(req, res){
     }
 };
 
-exports.cityRestaurants = function(req, res){
-    var city = req.params.city;
+exports.cityRestaurants = function(city){
     if (connection) {
         var queryString = 'SELECT  r.id, r.name, r.email, r.phone1, r.phone2, r.phone3, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r LEFT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE c.city LIKE ? UNION SELECT r.id, r.name, r.email, r.phone1, r.phone2, r.phone3, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r RIGHT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE c.city LIKE ?';
         connection.query(queryString, [city,city], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
-            console.log("The Row");
-            console.log(JSON.stringify(rows));
-            res.write(JSON.stringify(rows));
-            res.end();
+            return JSON.stringify(rows);
+            
         });
     }
 };

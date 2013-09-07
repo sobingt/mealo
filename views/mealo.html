@@ -1,0 +1,82 @@
+<html>
+<head>
+</head>
+<body>
+<style>
+:invalid { 
+  border-color: #e88;
+  -webkit-box-shadow: 0 0 5px rgba(255, 0, 0, .8);
+  -moz-box-shadow: 0 0 5px rbba(255, 0, 0, .8);
+  -o-box-shadow: 0 0 5px rbba(255, 0, 0, .8);
+  -ms-box-shadow: 0 0 5px rbba(255, 0, 0, .8);
+  box-shadow:0 0 5px rgba(255, 0, 0, .8);
+}
+
+:required {
+  border-color: #88a;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+  -o-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+  -ms-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+  box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+}
+
+form {
+  width:300px;
+  margin: 20px auto;
+}
+
+input, textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border:1px solid #ccc;
+  font-size:20px;
+  width:300px;
+  min-height:30px;
+  display:block;
+  margin-bottom:15px;
+  margin-top:5px;
+  outline: none;
+
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  -o-border-radius:5px;
+  -ms-border-radius:5px;
+  border-radius:5px;
+}
+
+input[type=submit] {
+  background:none;
+  padding:10px;
+}
+</style>
+
+<form oninput="total.value = (nights.valueAsNumber * 99) + 
+ ((guests.valueAsNumber - 1) * 10)">
+
+  <label>Full name:</label>
+  <input type="text" id="full_name" name="full_name" placeholder="Name your mealo" required>
+
+  <label>Description</label>
+  <textarea name = "description" id = "description" rows = "3">Your text here</textarea>
+  
+  <label>Date:</label>
+  <input type="date" id="arrival_dt" name="arrival_dt" required>
+    
+  <label>Number of guests :</label>
+  <input type="number" id="guests" name="guests" value="1" min="1" max="4" required>
+
+  <input type="submit" value="Create Mealo" /> 
+</form>
+
+<script>
+function check(input) {
+  if (input.value != document.getElementById('email_addr').value) {
+    input.setCustomValidity('The two email addresses must match.');
+  } else {
+    // input is valid -- reset the error message
+    input.setCustomValidity('');
+  }
+}
+</script>
+</body>
+</html>

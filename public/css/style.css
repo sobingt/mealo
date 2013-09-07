@@ -1,0 +1,24 @@
+body {
+  /* padding: 50px;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+.container-fluid{
+    height: 100%;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#map {
+    width: 100%;
+    height: 35%;
+    min-height: 48%;;
+    background: red;
+    display: block;
+}
