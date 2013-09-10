@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2013 at 09:42 AM
+-- Generation Time: Sep 10, 2013 at 04:29 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -35,6 +35,15 @@ CREATE TABLE IF NOT EXISTS `address` (
   KEY `fk_city_uid` (`city`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `attendance`
+--
+CREATE TABLE IF NOT EXISTS `attendance` (
+`mealid` int(11)
+,`attend` bigint(21)
+);
 -- --------------------------------------------------------
 
 --
@@ -84,24 +93,27 @@ INSERT INTO `geolocation` (`id`, `latitude`, `longitude`) VALUES
 
 CREATE TABLE IF NOT EXISTS `mealo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(35) NOT NULL,
   `menuId` int(11) NOT NULL,
   `tablesize` int(11) NOT NULL,
   `time` datetime NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `uid` int(11) NOT NULL,
   `description` text NOT NULL,
+  `images` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `mealo`
 --
 
-INSERT INTO `mealo` (`id`, `menuId`, `tablesize`, `time`, `created`, `uid`, `description`) VALUES
-(1, 1, 5, '2013-09-18 13:16:20', '2013-09-04 21:49:15', 1, 'This is the description of description on description'),
-(2, 6, 7, '2013-09-19 07:20:19', '2013-09-04 21:49:15', 1, 'This is the description of description on description'),
-(3, 3, 5, '2013-09-20 13:16:20', '2013-09-04 21:51:57', 2, 'This is the description of description on description'),
-(4, 5, 7, '2013-09-25 07:20:19', '2013-09-04 21:51:54', 2, 'This is the description of description on description');
+INSERT INTO `mealo` (`id`, `name`, `menuId`, `tablesize`, `time`, `created`, `uid`, `description`, `images`) VALUES
+(1, 'mealo 1', 1, 5, '2013-09-18 13:16:20', '2013-09-07 06:01:59', 1, 'This is the description of description on description', ''),
+(2, 'mealo 2', 6, 7, '2013-09-19 07:20:19', '2013-09-07 06:02:03', 1, 'This is the description of description on description', ''),
+(3, 'mealo 3', 3, 5, '2013-09-20 13:16:20', '2013-09-07 06:02:08', 2, 'This is the description of description on description', ''),
+(4, 'mealo 4', 5, 7, '2013-09-25 07:20:19', '2013-09-07 06:02:13', 2, 'This is the description of description on description', ''),
+(5, 'Mealo for ever', 6, 5, '2013-09-19 13:30:00', '2013-09-07 06:04:19', 2, 'fadf dfsdsfdsaf df sdfdsf df dsfdsaf sdf dsfds fdsfds fdsf f dsf ', '');
 
 -- --------------------------------------------------------
 
@@ -111,9 +123,11 @@ INSERT INTO `mealo` (`id`, `menuId`, `tablesize`, `time`, `created`, `uid`, `des
 
 CREATE TABLE IF NOT EXISTS `menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
   `restId` int(11) NOT NULL,
   `menu` varchar(255) NOT NULL,
   `type` enum('Breakfast','Brunch','Lunch','Dinner') NOT NULL,
+  `cost` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
@@ -121,14 +135,14 @@ CREATE TABLE IF NOT EXISTS `menu` (
 -- Dumping data for table `menu`
 --
 
-INSERT INTO `menu` (`id`, `restId`, `menu`, `type`) VALUES
-(1, 1, '', 'Breakfast'),
-(2, 1, '', 'Brunch'),
-(3, 2, '', 'Brunch'),
-(4, 2, '', 'Dinner'),
-(5, 1, '', 'Dinner'),
-(6, 2, '', 'Lunch'),
-(7, 2, '', 'Breakfast');
+INSERT INTO `menu` (`id`, `name`, `restId`, `menu`, `type`, `cost`) VALUES
+(1, 'option 1', 1, 'http://www.ramsaysbedandbreakfastedinburgh.com/graphics/breakfast_menu.jpg', 'Breakfast', 100),
+(2, 'option 2', 1, 'http://iliketuscany.com/wp-content/uploads/2011/03/Tuscany_Lunch_Menu_Bkgrd_2-790x1024.jpg', 'Brunch', 100),
+(3, 'option 1', 2, 'http://www.ramsaysbedandbreakfastedinburgh.com/graphics/breakfast_menu.jpg', 'Brunch', 300),
+(4, 'option 2', 2, 'http://iliketuscany.com/wp-content/uploads/2011/03/Tuscany_Lunch_Menu_Bkgrd_2-790x1024.jpg', 'Dinner', 450),
+(5, 'option 3', 1, 'http://www.ramsaysbedandbreakfastedinburgh.com/graphics/breakfast_menu.jpg', 'Dinner', 600),
+(6, 'option 3', 2, 'http://www.ramsaysbedandbreakfastedinburgh.com/graphics/breakfast_menu.jpg', 'Lunch', 700),
+(7, 'option 4', 2, 'http://www.ramsaysbedandbreakfastedinburgh.com/graphics/breakfast_menu.jpg', 'Breakfast', 340);
 
 -- --------------------------------------------------------
 
@@ -141,7 +155,21 @@ CREATE TABLE IF NOT EXISTS `participant` (
   `mealoId` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `participant`
+--
+
+INSERT INTO `participant` (`id`, `mealoId`, `uid`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 2),
+(4, 4, 1),
+(5, 5, 1),
+(6, 3, 1),
+(7, 1, 2),
+(8, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -153,10 +181,8 @@ CREATE TABLE IF NOT EXISTS `restaurant` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `locationId` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `phone1` varchar(15) NOT NULL,
-  `phone2` varchar(15) NOT NULL,
-  `phone3` varchar(15) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `phone` varchar(256) DEFAULT NULL,
   `cityId` int(11) NOT NULL,
   `maxTableSize` int(11) NOT NULL,
   `cuisine` varchar(80) NOT NULL,
@@ -169,10 +195,10 @@ CREATE TABLE IF NOT EXISTS `restaurant` (
 -- Dumping data for table `restaurant`
 --
 
-INSERT INTO `restaurant` (`id`, `name`, `locationId`, `email`, `phone1`, `phone2`, `phone3`, `cityId`, `maxTableSize`, `cuisine`, `picture`, `note`) VALUES
-(1, 'Spice Tree', 1, 'sobingt@gmail.com', '02226405161', '02226405161', '', 1, 20, 'Chinese ', '', NULL),
-(2, 'Out Of The Blue Rest', 2, 'bluerest@rest.com', '12345676', '', '', 1, 20, 'American', '', NULL),
-(3, 'Leopold Cafe & Bar', 3, 'leapoldcafe@gmail.com', '423423542', '', '', 1, 20, 'Mexican', '', NULL);
+INSERT INTO `restaurant` (`id`, `name`, `locationId`, `email`, `phone`, `cityId`, `maxTableSize`, `cuisine`, `picture`, `note`) VALUES
+(1, 'Spice Tree', 1, 'sobingt@gmail.com', '[{"phone1":"02226405161","phone2":"02226405161","phone3":"02226405161"}]', 1, 20, 'Chinese ', '', NULL),
+(2, 'Out Of The Blue Rest', 2, 'bluerest@rest.com', '[{"phone1":"02226405161","phone2":"02226405161","phone3":"02226405161"}]', 1, 20, 'American', '', NULL),
+(3, 'Leopold Cafe & Bar', 3, 'leapoldcafe@gmail.com', '[{"phone1":"02226405161","phone2":"02226405161","phone3":"02226405161"}]', 1, 20, 'Mexican', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -214,6 +240,15 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`uid`, `fname`, `lname`, `email`, `username`, `password`, `phone`, `role`) VALUES
 (1, 'Sobin', 'Thomas', 'sobingt@gmail.com', 'sobingt', 'hj34ktb32dsfsad423j763', '12345678', 'admin'),
 (2, 'Akshat', 'Verma', 'akshat@bitbrothers.in', 'akshat', 'cxvmzxkcjvhjdf7hjfkbdah', '3423524543', 'user');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `attendance`
+--
+DROP TABLE IF EXISTS `attendance`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `attendance` AS select `participant`.`mealoId` AS `mealid`,count(0) AS `attend` from `participant` group by `participant`.`mealoId`;
 
 --
 -- Constraints for dumped tables
