@@ -5,7 +5,25 @@ exports.index = function(req, res){
   res.render('mealo', { title: 'Express' });
 };
 
-getCityRestaurants = function(city, callback){
+exports.mealo = function(req, res1) {
+var id = req.params.id;
+    var url = 'http://localhost:3000/get/mealo/'+id;
+	var response = '';
+	var body = '';
+	http.get(url, function(res) {
+        res.on('data', function(chunk) {
+            body += chunk;
+        });
+		res.on('end', function() {
+            response = JSON.parse(body);
+            res1.render('singlemealo', {restdata:response,id : id,url : req.url});
+        });
+    });
+
+};
+
+getCityRestaurants = function(req, res1){
+    var city = req.params.city;
     var url = 'http://localhost:3000/get/'+req.params.city+'/restaurants';
 	var response = '';
 	var body = '';
@@ -15,10 +33,11 @@ getCityRestaurants = function(city, callback){
         });
 		res.on('end', function() {
             response = JSON.parse(body);
-            callback(body);
+            res1.render('createmealo', { place : city, restdata:response });
         });
     });
-}
+
+};
 
 exports.createmealo = function(req, res1){
     var city = req.params.city;

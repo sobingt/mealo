@@ -29,7 +29,7 @@ exports.one = function(req, res){
 exports.restaurant = function(req, res){
     var id = req.params.id;
     if (connection) {
-        var queryString = 'SELECT  r.id, r.name, r.email, r.phone1, r.phone2, r.phone3, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r LEFT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE r.id = ? UNION SELECT r.id, r.name, r.email, r.phone1, r.phone2, r.phone3, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r RIGHT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE r.id = ?'
+        var queryString = 'SELECT  r.id, r.name, r.email, r.phone, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r LEFT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE r.id = ? UNION SELECT r.id, r.name, r.email, r.phone, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r RIGHT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE r.id = ?'
         connection.query(queryString, [id,id], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
@@ -70,13 +70,31 @@ exports.restaurantMenuType = function(req, res){
 exports.mealo = function(req, res){
     var id = req.params.id;
     if (connection) {
-        var queryString = 'SELECT *  FROM mealo WHERE id = ?';
+        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid WHERE mealo.id = ?';
         connection.query(queryString, [id], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
             res.write(JSON.stringify(rows));
             res.end();
         });
+    }
+};
+
+exports.allmealos = function(req, res){
+    if (connection) {
+        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid';
+        //console.log(queryString);
+        //res.write(queryString);
+        
+        
+        connection.query(queryString, function(err, rows, fields) {
+            if (err) throw err;
+            res.contentType('application/json');
+            res.write(JSON.stringify(rows));
+            console.log(rows);
+            res.end();
+        });
+        
     }
 };
 
@@ -100,7 +118,7 @@ exports.mealoType = function(req, res){
 exports.cityRestaurants = function(req, res){
     var city = req.params.city;
     if (connection) {
-        var queryString = 'SELECT  r.id, r.name, r.email, r.phone1, r.phone2, r.phone3, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r LEFT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE c.city LIKE ? UNION SELECT r.id, r.name, r.email, r.phone1, r.phone2, r.phone3, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r RIGHT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE c.city LIKE ?';
+        var queryString = 'SELECT  r.id, r.name, r.email, r.phone, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r LEFT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE c.city LIKE ? UNION SELECT r.id, r.name, r.email, r.phone, r.cuisine, r.picture, r.note, g.latitude, g.longitude, c.city FROM restaurant r RIGHT JOIN (geolocation g,city c) ON r.`locationId` = g.id WHERE c.city LIKE ?';
         connection.query(queryString, [city,city], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');

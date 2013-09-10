@@ -41,8 +41,43 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
+hbs.registerHelper("moduloIf", function(index_count,mod,block) {
+  if(parseInt(index_count)%(mod)=== 0 && parseInt(index_count) != 0 )
+  {
+    return block.fn(this);
+  }
+});
+
+hbs.registerHelper("lastIf", function(index_count,mod,block) {
+  if(parseInt(index_count)=== mod-1)
+  {
+    return block.fn(this);
+  }
+});
+
+
+//app.get('/', routes.index);
+
+app.get('/', function(req, res1) {
+    var url = 'http://localhost:3000/getmealo';
+	var response = '';
+	var body = '';
+	http.get(url, function(res) {
+        res.on('data', function(chunk) {
+            body += chunk;
+        });
+		res.on('end', function() {
+            response = JSON.parse(body);
+			res1.render('index', {restdata:response});
+            console.log(response);
+        });
+    });
+	
+   
+});
+
 app.get('/mealo', mealo.index);
+app.get('/mealo/:id', mealo.mealo);
 app.get('/:city/mealo/new', mealo.createmealo);
 app.post('/:city/mealo/new', mealo.createmealopost);
 app.get('/users', user.list);
@@ -58,6 +93,8 @@ app.get('/get/restaurant/:id/menu', get.restaurantMenu);
 app.get('/get/restaurant/:id/menu/:type', get.restaurantMenuType);
 
 app.get('/get/mealo/:id', get.mealo);
+app.get('/getmealo', get.allmealos);
+
 app.get('/get/mealo/type/:type', get.mealoType);
 
 app.get('/get/:city/restaurants', get.cityRestaurants);
