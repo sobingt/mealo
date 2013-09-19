@@ -4,6 +4,7 @@ var http = require('http');
 var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
                                           password: 'root1234', database: 'mealo'});
 
+
 //FIX IT .....MAKE IT ALL POSTS OR FUNCTIONS
 										  
 exports.all = function(req, res){
@@ -102,8 +103,6 @@ exports.allmealos = function(req, res){
         var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid';
         //console.log(queryString);
         //res.write(queryString);
-        
-        
         connection.query(queryString, function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
@@ -114,6 +113,24 @@ exports.allmealos = function(req, res){
         
     }
 };
+
+exports.attendee = function(req, res){
+var id = req.params.mealoId;
+    if (connection) {
+        var queryString = 'SELECT u.fname, u.lname FROM user u LEFT JOIN participant p ON p.uid = u.uid WHERE p.mealoId = ?';
+        //console.log(queryString);
+        //res.write(queryString);
+        connection.query(queryString, [id], function(err, rows, fields) {
+            if (err) throw err;
+            res.contentType('application/json');
+            res.write(JSON.stringify(rows));
+            console.log(rows);
+            res.end();
+        });
+        
+    }
+};
+
 
 //app.get('/get/mealo/:type', get.mealoType);
  

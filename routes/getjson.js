@@ -3,6 +3,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
                                           password: 'root1234', database: 'mealo'});
 
+
 exports.all = function(req, res){
     if (connection) {
         connection.query('SELECT * FROM user order by fname', function(err, rows, fields) {
