@@ -1149,7 +1149,13 @@ div.upload_pic3 input {
     padding: 0 25px;
 }
 
-.backers_days_blocks 
+#back_this_project_block_attendes
+{
+	margin: 7px auto 0;
+    padding: 0 25px;
+}
+
+.members_days_blocks 
 {
     /*width: 100%;*/
 	/*height: 67px;*/
@@ -1157,12 +1163,12 @@ div.upload_pic3 input {
 	border-bottom:1px solid #e7e7e7;
 	border-top: 1px solid #fafafa;
 }
-.backers_days_blocks.first
+.members_days_blocks.first
 {
     border-top: none;
 }
 
-.backers_days_blocks .image_first
+.members_days_blocks .image_first
 {
     background: url('../img/description/people.png') left center no-repeat;
 	height: 23px;
@@ -1171,7 +1177,7 @@ div.upload_pic3 input {
 	margin-top:11px;
 }
 
-.backers_days_blocks .image_second
+.members_days_blocks .image_second
 {
     background: url('../img/description/dollar.png') left center no-repeat;
 	height: 23px;
@@ -1180,7 +1186,7 @@ div.upload_pic3 input {
 	margin-top:11px;
 }
 
-.backers_days_blocks .image_third
+.members_days_blocks .image_third
 {
     background: url('../img/description/clock.png') left center no-repeat;
 	height: 23px;
@@ -1189,7 +1195,7 @@ div.upload_pic3 input {
 	margin-top:11px;
 }
 
-.text_backers_days_blocks
+.text_members_days_blocks
 {
     width:225px;
 	float:right;
@@ -1197,7 +1203,7 @@ div.upload_pic3 input {
 	font-family: 'Titillium Web',sans-serif;
 }
 
-.text_backers_days_blocks .top_text_backers_days_blocks
+.text_members_days_blocks .top_text_members_days_blocks
 {
     font-size:17px;
 	font-weight:bold;
@@ -1293,14 +1299,14 @@ div.upload_pic3 input {
     text-decoration: none;
 }
 
-.pledges_block_info_backers,
+.pledges_block_info_members,
 .pledges_block_info_text,
 .pledges_block_info_estimate_delivery
 {
     margin-left:25px;
 }
 
-.pledges_block_info_backers
+.pledges_block_info_members
 {
     font-size: 14px;
     font-weight: bold;
@@ -1801,37 +1807,37 @@ height: 48px;
 }
 /*updates_page*/
 
-/*backers page*/
+/*members page*/
 
-#backers_content
+#members_content
 {
     margin-top: 30px;
 	/*height: 630px;*/
 }
 
 
-#backers_content .backers_block_text
+#back_this_project_block_attendes .members_block_text
 {
     margin-top: 15px;
 	height: 65px;
 }
 
-#backers_content .backers_block_text .face_backers_content
+#back_this_project_block_attendes .members_block_text .face_members_content
 {
-    background: url('../img/description/comment_author_description.png') center center no-repeat #fff;
+    /*background: url('../img/description/comment_author_description.png') center center no-repeat #fff;*/
 	margin: 1px;
 	width:56px;height:56px;
 	float:left;
 }
 
-#backers_content .backers_block_text .image_face_backers_content
+#back_this_project_block_attendes .members_block_text .image_face_members_content
 {
     border: 1px solid #dcdcdc;
 	float:left;
 	width: 58px;
 }
 
-#backers_content .backers_block_text .text_backers_content
+#members_content .members_block_text .text_members_content
 {
     border: 1px solid #dcdcdc;
 	float:left;
@@ -1843,7 +1849,7 @@ height: 48px;
 }
 
 
-#backers_content .backers_block_text .text_backers_content  .backer_name
+#members_content .members_block_text .text_members_content  .backer_name
 {
     font-size: 16px;
 	font-family: 'Patua One',sans-serif;
@@ -1852,13 +1858,13 @@ height: 48px;
     top: 2px;
 }
 
-#backers_content .backers_block_text .text_backers_content  .number_project
+#members_content .members_block_text .text_members_content  .number_project
 {
     color: #a0a0a0;
 	position: relative;
     top: -3px;
 }
-#backers_content .btn-group .btn
+#members_content .btn-group .btn
 {
 	border-top: 1px solid #ffeeff;
 	font-family: 'Patua One',sans-serif;
@@ -1866,7 +1872,7 @@ height: 48px;
 }
 
 .btn.gray {color: #adadad;}
-/*backers page*/
+/*members page*/
 
 .backgrblack {
     background-color: #7b7b7b;

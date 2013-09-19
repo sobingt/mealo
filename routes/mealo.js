@@ -5,20 +5,12 @@ exports.index = function(req, res){
   res.render('mealo', { title: 'Express' });
 };
 
-exports.mealo = function(req, res1) {
-var id = req.params.id;
-    var url = 'http://localhost:3000/get/mealo/'+id;
-	var response = '';
-	var body = '';
-	http.get(url, function(res) {
-        res.on('data', function(chunk) {
-            body += chunk;
-        });
-		res.on('end', function() {
-            response = JSON.parse(body);
-            res1.render('singlemealo', {restdata:response,id : id,url : req.url});
-        });
-    });
+exports.mealo = function(req,res1) {
+				console.log("inside main mealo");
+            //console.log(res1.response1);
+            //console.log(res1.response2);
+            res1.render('singlemealo', {restdata1:res1.response1,restdata2:res1.response2,url : req.url});
+
 
 };
 

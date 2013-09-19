@@ -1,7 +1,11 @@
 var mysql = require('mysql');
-var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root', database: 'mealo'});
+var http = require('http');
 
+var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
+                                          password: 'root1234', database: 'mealo'});
+
+//FIX IT .....MAKE IT ALL POSTS OR FUNCTIONS
+										  
 exports.all = function(req, res){
     if (connection) {
         connection.query('SELECT * FROM user order by fname', function(err, rows, fields) {
@@ -70,7 +74,20 @@ exports.restaurantMenuType = function(req, res){
 exports.mealo = function(req, res){
     var id = req.params.id;
     if (connection) {
-        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid WHERE mealo.id = ?';
+        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost,u.profileimg FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a,user u) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid AND mealo.uid=u.uid WHERE mealo.id = ?';
+        connection.query(queryString, [id], function(err, rows, fields) {
+            if (err) throw err;
+            res.contentType('application/json');
+            res.write(JSON.stringify(rows));
+            res.end();
+        });
+    }
+};
+
+exports.attendes = function(req, res){
+    var id = req.params.id;
+    if (connection) {
+        var queryString = 'select mealo.id,user.profileimg from mealo,user,participant where participant.mealoid=mealo.id and participant.uid=user.uid and mealo.id=?';
         connection.query(queryString, [id], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
@@ -175,6 +192,11 @@ exports.cityMenuType = function(req, res){
     }
 };
 
+
+
+
+
+
 /*
 app.get('/get/restaurant/:id/menu', get.restaurantMenu);
 app.get('/get/restaurant/:id/menu/:type', get.restaurantMenuType);
@@ -187,3 +209,72 @@ app.get('/get/:city/mealos', get.cityMealos);
 app.get('/get/:city/users', get.cityUsers);
 app.get('/get/:city/menu/type', get.cityMenuType);
 */
+
+
+//GET FUNCTIONS AS SAID BY SOBIN: FOR INDIVIDUAL MEALO:
+
+exports.getMealo=function(req, res1,next) {
+var id = req.params.id;
+    var url = 'http://localhost:3000/get/mealo/'+id;
+	var response1 = '';
+	var body = '';
+	http.get(url, function(res) {
+        res.on('data', function(chunk) {
+            body += chunk;
+        });
+		res.on('end', function() {
+            response1 = JSON.parse(body);
+            res1.response1 = response1;
+			//console.log(res1.response);
+			next();
+        });
+    });
+
+};
+
+exports.getAttendes=function(req,res1,next) {
+var id = req.params.id;
+	//console.log(req.params);
+    var url = 'http://localhost:3000/get/mealo/attendes/'+id;
+	var response2 = '';
+	var body = '';
+	http.get(url, function(res) {
+        res.on('data', function(chunk) {
+            body += chunk;
+        });
+		res.on('end', function() {
+            response2 = JSON.parse(body);
+			res1.response1 = res1.response1;
+			res1.response2 = response2;
+			//console.log(res1.response1);
+			//console.log(res1.response2);
+			console.log("inside get attendes");
+			next();
+        });
+    });
+
+};
+
+exports.getRole=function(req,res1,next) {
+	//var uid=res1.uid;
+	//res1.response1=res1.response1;
+	//res1.response2=res1.response2;
+	//console.log(res1.response1);
+    //console.log(res1.response2);
+	console.log("inside get roleeeee");
+	var creatorid=res1.response1[0].uid;
+	console.log(creatorid);
+	if(typeof uid !=undefined)
+	{
+		
+	}
+	else
+	{
+	
+	
+	
+	}
+	next();
+
+
+};

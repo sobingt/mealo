@@ -901,7 +901,7 @@
         float: none;
     }
 
-    .text_backers_days_blocks {
+    .text_members_days_blocks {
         text-align: center;
     }
     #author_review .right_face_social_text {
@@ -1216,7 +1216,7 @@ img{ max-width: 100%; }
     .social_decc {
         padding: 16px 13px;
     }
-    #backers_content .backers_block_text .text_backers_content {
+    #members_content .members_block_text .text_members_content {
         width: 170px;
     }
       .partn_top {
@@ -1308,7 +1308,7 @@ img{ max-width: 100%; }
 
 }
 
-    #backers_content .span6 {
+    #members_content .span6 {
         width: 48.93617021276595%;
         display: block;
         float: left;
@@ -1594,7 +1594,7 @@ img{ max-width: 100%; }
         text-align: center;
         padding: 10px;
     }
-    #backers_content .backers_block_text .text_backers_content {
+    #members_content .members_block_text .text_members_content {
         width: auto;
     }
 
@@ -1881,7 +1881,7 @@ img{ max-width: 100%; }
         text-align: center;
         padding: 10px;
     }
-    #backers_content .span6 {
+    #members_content .span6 {
         width: 100%;
     }
 

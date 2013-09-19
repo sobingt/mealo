@@ -1,4 +1,4 @@
-{{#each restdata}}
+{{#each restdata1}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +14,33 @@
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/resp.css" rel="stylesheet">
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <style type="text/css">
-
+		#map-canvas {
+        margin: 0;
+        padding: 0;
+		width:100%;
+        height: 320px;
+      }
     </style>
-
+	<script>
+	
+		var latLong = new google.maps.LatLng({{latitude}}, {{longitude}});
+		function initialize() {
+								var mapOptions = {
+													zoom: 15,
+													center: latLong,
+													mapTypeId: google.maps.MapTypeId.ROADMAP
+												 }
+								var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+								var marker=new google.maps.Marker({
+														map: map,
+														draggable: false,
+														position:latLong
+														});
+							  }
+	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -46,6 +69,7 @@
 </head>
 
 <body>
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -145,189 +169,36 @@
 <div class="container-fluid line contentt description_page">
 
 <div class="clear"></div>
+<div id="map-canvas"></div>
+<div class="clear"></div>
 <div class="content description">
 <div class="row-fluid cols">
 <div class="left_content_descr span8">
 <h1 class="decoration text-center"><span class="nobacgr">{{name}}</span></h1>
-<div class="video">
-    <div id="myCarousel" class="carousel slide">
-        <div class="carousel-inner content" style="width: 100%">
-            <div class="item">
-                 <img src="/img/pics_project.png">
-            </div>
-            <div class="item active">
-                <div>
-                    <img src="/img/pics_project.png">
-                </div>
-            </div>
-        </div>
-        <div id="visiblepanel" class="visiblepanel">
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev" id="slide_left"></a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next" id="slide_rigth"></a>
-        </div>
-    </div>
-</div>
+
 
 <div class="tabbable" style="margin-bottom: 18px;">
     <div id="tabs_pages">
         <ul class=" tabs_pages_ul row-fluid">
             <li class="active span4"><a href="#tab1" data-toggle="tab">DESCRIPTION</a></li>
-            <li class="span4"><a href="#tab2" data-toggle="tab">ATTENDEE</a></li>
-            <li class="span4"><a href="#tab3" data-toggle="tab">UPDATES</a></li>
         </ul>
     </div>
     <div class="tab-content" style="padding-bottom: 9px;">
         <div class="tab-pane active" id="tab1">
             <div id="description_content">
-                <div class="title_description_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec massa ut justo accumsan malesuada ut pharetra sapien. Nullam ac nisi vel augue ultrices venenatis sed sed felis.</div>
-                <div class="text_description_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec massa ut justo accumsan malesuada ut pharetra sapien. Nullam ac nisi vel augue ultrices venenatis sed sed felis. Quisque velit tortor, suscipit et auctor tempus, pretium eu velit. Vestibulum vitae ligula sapien. Donec et felis lorem. Vestibulum non feugiat risus. Sed malesuada nisl vel lorem rhoncus feugiat. Proin pellentesque velit nec metus tincidunt quis egestas tortor venenatis. Phasellus mattis sapien suscipit massa suscipit placerat. Vestibulum semper laoreet tempus. Curabitur ac sagittis urna. Sed rhoncus massa vel lorem lobortis sit amet adipiscing nunc aliquet. Quisque metus velit, mattis a vehicula sed, hendrerit sed leo. Donec aliquet molestie semper. Donec ac condimentum nisl. Ut bibendum scelerisque turpis vitae porttitor. Maecenas eget nisi nulla. Pellentesque sed congue nulla. Etiam magna massa, tempus quis accumsan sit amet, posuere eget odio. Suspendisse pellentesque odio id nunc tempor placerat. Pellentesque ipsum mauris, ultrices ut rhoncus id, vehicula eget est. Sed turpis tortor, accumsan eu ultrices et, egestas eget diam. Praesent ligula felis, varius vitae mollis at, cursus at massa. Sed consequat semper sagittis. Vivamus ultricies massa a urna interdum ultrices. </div>
-                <div class="text_description_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec massa ut justo accumsan malesuada ut pharetra sapien. Nullam ac nisi vel augue ultrices venenatis sed sed felis. Quisque velit tortor, suscipit et auctor tempus, pretium eu velit. Vestibulum vitae ligula sapien. Donec et felis lorem. Vestibulum non feugiat risus. Sed malesuada nisl vel lorem rhoncus feugiat. Proin pellentesque velit nec metus tincidunt quis egestas tortor venenatis. Phasellus mattis sapien suscipit massa suscipit placerat. </div>
-                <div class="text_description_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec massa ut justo accumsan malesuada ut pharetra sapien. Nullam ac nisi vel augue ultrices venenatis sed sed felis. Quisque velit tortor, suscipit et auctor tempus, pretium eu velit. Vestibulum vitae ligula sapien.</div>
+			
+                <div class="title_description_content">{{description}}</div>
+                <div class="text_description_content"></div>
+                <div class="text_description_content"> </div>
+                <div class="text_description_content"></div>				
+            </div>
+			<div class="payment_getaway_button">
+                <button class="btn btn-large make_payment" type="button">
+                    <small>EDIT/DELETE/GO</small>
+                </button>
             </div>
         </div>
-        <div class="tab-pane" id="tab2">
-            <div id="backers_content">
-                <div class="row-fluid">
-                    <div class=" span6">
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="span6">
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                        <div class="backers_block_text">
-                            <div class="image_face_backers_content"><div class="face_backers_content"></div></div>
-                            <div class="text_backers_content">
-                                <div class="backer_name">Testing</div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span12">
-                        <div class="btn-toolbar text-center">
-                            <div class="decoration text-center proj">
-                                <div class="btn-group nobacgr">
-                                    <button class="btn"><span class="gray">1</span></button>
-                                    <button class="btn mleft10">2</button>
-                                    <button class="btn mleft10">3</button>
-                                    <button class="btn mleft10">4</button>
-                                    <button class="btn mleft10">5</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="tab3">
-            <div id="updates_content">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <div class="updates_block_text">
-                            <h4>Update 3</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec massa ut justo accumsan malesuada ut pharetra sapien. Nullam ac nisi vel augue ultrices venenatis sed sed felis. Quisque velit tortor, suscipit et auctor tempus, pretium eu velit. Vestibulum vitae ligula sapien. Donec et felis lorem. Vestibulum non feugiat risus. Sed malesuada nisl vel lorem rhoncus feugiat. Proin pellentesque velit nec metus tincidunt quis egestas tortor venenatis. Phasellus mattis sapien suscipit massa suscipit placerat. Vestibulum semper laoreet tempus. Curabitur ac sagittis urna. Sed rhoncus massa vel lorem lobortis sit amet adipiscing nunc aliquet.  accumsan sit amet, posuere eget odio. Suspendisse pellentesque odio id nunc tempor placerat. Pellentesque ipsum mauris, ultrices ut rhoncus id, vehicula eget est. </p>
-                        </div>
-                        <div class="updates_block_text">
-                            <h4>Update 2</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec massa ut justo accumsan malesuada ut pharetra sapien. Nullam ac nisi vel augue ultrices venenatis sed sed felis. Quisque velit tortor, suscipit et auctor tempus, pretium eu velit. Vestibulum vitae ligula sapien. Donec et felis lorem. Vestibulum non feugiat risus. Sed malesuada nisl vel lorem rhoncus feugiat. Proin pellentesque velit nec metus tincidunt quis egestas tortor venenatis. Phasellus mattis sapien suscipit massa suscipit placerat. Vestibulum semper laoreet tempus. Curabitur ac sagittis urna. Sed rhoncus massa vel lorem lobortis sit amet adipiscing nunc aliquet. Quisque metus velit, mattis a vehicula sed, hendrerit sed leo. Donec aliquet molestie semper. Donec ac condimentum nisl. Ut bibendum scelerisque turpis vitae porttitor. </p>
-                        </div>
-                        <div class="updates_block_text">
-                            <h4>Update 1</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec massa ut justo accumsan malesuada ut pharetra sapien. Nullam ac nisi vel augue. Nullam ac nisi vel augue.  </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
     </div>
 </div>
 
@@ -364,7 +235,7 @@
         </div>
         <div class="right_face_social_text span8">
             <div class="name_surname">Sobin George Thomas</div>
-            <div class="text_author_right">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec massa ut justo accumsan malesuada ut pharetra sapien.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec massa ut justo accumsan malesuada ut pharetra sapien.</div>
+            <div class="text_author_right">.</div>
         </div>
     </div>
 </div>
@@ -372,38 +243,58 @@
 <h4 class="decoration text-center"><span class="nobacgr">Ask a Question</span></h4>
 <div class="fb-comments" data-href="{{url}}" data-width="600"></div>
 </div>
+
 <div class="sidebar_descr span4">
     <div id="back_this_project_block">
-        <div class="backers_days_blocks first">
+		<div id="back_this_project_block_attendes">
+			{{/each}}
+			<div class="row-fluid">
+			{{#each restdata2}}
+				{{#limit @index 9}}
+				{{#moduloIf @index 3}}
+			</div>
+			<div class="row-fluid">
+				{{/moduloIf}}
+				<div class="span4">
+					<div class="members_block_text">
+                            <div class="image_face_members_content"><div class="face_members_content"><img src={{profileimg}}></div></div>
+					</div>
+				</div>
+				{{/limit}}
+			{{/each}}
+			</div>
+			{{#each restdata1}}
+		</div>
+		<div class="members_days_blocks first">
             <div class="row-fluid">
                 <div class="span1" style="margin-right: 10px"><div class="image_first"></div></div>
-                <div class="text_backers_days_blocks span10">
-                    <div class="top_text_backers_days_blocks"><script>
+                <div class="text_members_days_blocks span10">
+                    <div class="top_text_members_days_blocks"><script>
                                      document.write(seat);
                                     </script></div>
-                    <div class="bottom_text_backers_days_blocks">Attending</div>
+                    <div class="bottom_text_members_days_blocks">Attending</div>
                 </div>
             </div>
         </div>
-        <div class="backers_days_blocks">
+        <div class="members_days_blocks">
             <div class="row-fluid">
                 <div class="span1" style="margin-right: 10px"><div class="image_second"></div></div>
-                <div class="text_backers_days_blocks span10">
-                    <div class="top_text_backers_days_blocks"><script>
+                <div class="text_members_days_blocks span10">
+                    <div class="top_text_members_days_blocks"><script>
                                      document.write(left);
                                     </script> </div>
-                    <div class="bottom_text_backers_days_blocks">seats left</div>
+                    <div class="bottom_text_members_days_blocks">seats left</div>
                 </div>
             </div>
         </div>
-        <div class="backers_days_blocks">
+        <div class="members_days_blocks">
             <div class="row-fluid">
                 <div class="span1" style="margin-right: 10px"><div class="image_third"></div></div>
-                <div class="text_backers_days_blocks span10">
-                    <div class="top_text_backers_days_blocks"><script>
+                <div class="text_members_days_blocks span10">
+                    <div class="top_text_members_days_blocks"><script>
                                      document.write(strTime);
                                     </script> </div>
-                    <div class="bottom_text_backers_days_blocks">on <script>
+                    <div class="bottom_text_members_days_blocks">on <script>
                                      document.write(i);
                                      document.write(" "+month[m]);
                                     </script></div>

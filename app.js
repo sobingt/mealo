@@ -8,6 +8,7 @@ var express = require('express')
   , user = require('./routes/user')
   , mealo = require('./routes/mealo')
   , get = require('./routes/get')
+  ,testemail=require('./routes/testemail')
   //, mealoJson = require('./routes/json')
   , http = require('http')
   , path = require('path')
@@ -15,7 +16,7 @@ var express = require('express')
   , connect = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: 'root1234',
     database: "mealo"
 	})
   , gm = require('googlemaps')
@@ -43,6 +44,13 @@ if ('development' == app.get('env')) {
 
 hbs.registerHelper("moduloIf", function(index_count,mod,block) {
   if(parseInt(index_count)%(mod)=== 0 && parseInt(index_count) != 0 )
+  {
+    return block.fn(this);
+  }
+});
+
+hbs.registerHelper("limit", function(index_count,limit,block) {
+  if(parseInt(index_count)< limit-1 )
   {
     return block.fn(this);
   }
@@ -76,8 +84,49 @@ app.get('/', function(req, res1) {
    
 });
 
+//ADDING CODE TO SEND AN EMAIL:
+
+var alphamail=require('alphamail');
+
+var emailService = new alphamail.EmailService("5232c205d5ac06-55939110");
+	
+app.get('/email', function(req,res) {
+
+var data={
+	name:"sobin"
+};
+
+var payload = new alphamail.EmailMessagePayload()
+    .setProjectId(2916) // ID of your AlphaMail project
+    .setSender(new alphamail.EmailContact("Bit Brothers", "testtanmay03@gmail.com"))
+    .setReceiver(new alphamail.EmailContact("Founder", "sobingt@gmail.com"))
+    .setBodyObject(data);
+
+emailService.queue(payload, function(error, result){
+    if(error){
+        console.log(error);
+        return;
+    }
+    console.log("Email sent! ID = " + result);
+});
+
+
+
+});
+
+//END OF ADDITION
+
+//adding for email:
+
+//app.get('/test/welcome',testemail.welcomeToMealo);
+//app.get('/test/registration',testemail.testRegistration);
+
+
+
+//end of addition for email
+
 app.get('/mealo', mealo.index);
-app.get('/mealo/:id', mealo.mealo);
+app.get('/mealo/:id',get.getMealo,get.getAttendes,get.getRole,mealo.mealo);
 app.get('/:city/mealo/new', mealo.createmealo);
 app.post('/:city/mealo/new', mealo.createmealopost);
 app.get('/users', user.list);
@@ -93,6 +142,7 @@ app.get('/get/restaurant/:id/menu', get.restaurantMenu);
 app.get('/get/restaurant/:id/menu/:type', get.restaurantMenuType);
 
 app.get('/get/mealo/:id', get.mealo);
+app.get('/get/mealo/attendes/:id', get.attendes);
 app.get('/getmealo', get.allmealos);
 
 app.get('/get/mealo/type/:type', get.mealoType);
