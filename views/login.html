@@ -1,91 +1,176 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<script type="text/javascript">
-</script>
+    <meta charset="utf-8">
+    <title>Mealo</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="">
+
+    <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,200,300' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
+    <link href="css/resp.css" rel="stylesheet">
+    <link href="css/colorbox.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="favicon.html" />
+    <link rel="apple-touch-icon" href="img/touch-icon.html" />
+    <link rel="image_src" href="img/touch-icon.html" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--[if IE 8]>
+    <style type="text/css">
+        input[type="checkbox"], input[type="radio"] {
+            display: inline;
+        }
+        input[type="checkbox"] + label, input[type="radio"] + label{
+            display: inline;
+            background: none;
+            margin-bottom: 15px;
+        }
+        .zone {
+            background-color: #727272;
+            filter: alpha(Opacity=70);
+        }
+        .black {
+            background-color: #727272;
+            filter: alpha(Opacity=70);
+        }
+    </style>
+    <![endif]-->
+
+    <script src="js/jquery.js"></script>
+ 
 </head>
+
 <body>
-<style>
-:invalid { 
-  border-color: #e88;
-  -webkit-box-shadow: 0 0 5px rgba(255, 0, 0, .8);
-  -moz-box-shadow: 0 0 5px rbba(255, 0, 0, .8);
-  -o-box-shadow: 0 0 5px rbba(255, 0, 0, .8);
-  -ms-box-shadow: 0 0 5px rbba(255, 0, 0, .8);
-  box-shadow:0 0 5px rgba(255, 0, 0, .8);
-}
+<div id="header" class="header">
+    <a name="id_home"></a>
+        <div class="width titul">
+            <div class="reg inline">
 
-:required {
-  border-color: #88a;
-  -webkit-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-  -moz-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-  -o-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-  -ms-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-  box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-}
+            </div>
 
-form {
-  width:300px;
-  margin: 20px auto;
-}
+            <div class="social inline fright">
+                <ul id="social">
+                <li class="bleft inline">
+                    <ul style="margin-left: 10px">
+                        <li><a href="https://www.facebook.com/" target="_blank"  original-title="twitter"><img src="img/social/icon_header_face.png" alt=""></a></li>
+                        <li><a href="https://plus.google.com/" target="_blank"  original-title="googleplus"><img src="img/social/icon_header_g.png" alt=""></a></li>
+                        <li><a href="https://twitter.com/" title="facebook" target="_blank" ><img src="img/social/icon_header_tw.png" alt=""></a></li>
+                       
+                    </ul>
+                </li>
+                </ul>
+            </div>
+        </div>
 
-input, textarea, select {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  border:1px solid #ccc;
-  font-size:20px;
-  width:300px;
-  min-height:30px;
-  display:block;
-  margin-bottom:15px;
-  margin-top:5px;
-  outline: none;
+        <div class="clear"></div>
+        <div class="navigate">
+            <div class="width">
+                <div class="logo inline">
+                    <h1 class="inline fleft">Mealo</h1>
+                </div>
 
-  -webkit-border-radius:5px;
-  -moz-border-radius:5px;
-  -o-border-radius:5px;
-  -ms-border-radius:5px;
-  border-radius:5px;
-}
-
-input[type=submit] {
-  background:none;
-  padding:10px;
-}
-
-.input_hidden {
-    position: absolute;
-    left: -9999px;
-}
-
-.selected {
-    background-color: #ccc;
-}
-
-#menu label {
-    display: inline-block;
-    cursor: pointer;
-}
+                <div class="navigation inline">
+                    <ul class="nav inline menuleft">
+                        <li class="active"><a class="bleft" href="../">HOME</a></li>
+                        <li><a id="link_about" class="bleft" href="#">ABOUT</a></li>
+                        <li><a id="link" class="bleft" href="#">MEALOS</a></li>
+                        <li><a id="link_reg" class="bleft" href="#">REGISTER</a></li>
+                        <li><a id="link_partners" class="bleft last" href="#">RESTAURANT</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div id="header_select">
+                <select id="dynamic_select">
+                    <option value="" selected>Select A Page</option>
+                    <option value="../#id_about">About</option>
+                    <option value="../#id3">Mealos</option>
+                    <option value="../#id_reg">Registration</option>
+                    <option value="../#id_partn">Restaurants</option>
+                </select>
+            </div>
+        </div>
 
 
-#menu label:hover {
-    background-color: #efefef;
-}
-
-#menu label img {
-    padding: 3px;
-    
-}
-</style>
-
-<form action="/login" method="post">
-    <div>
-        <label>Username:</label>
-        <input type="text" name="username"/>
     </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
+<div id="navtop" class="width navigate" style="position: fixed;  display: none; top: 0px; left: 0px;right: 0px;z-index: 99999999999999999;">
+    <div class="navigation">
+        <ul class="nav inline menuleft">
+            <li class="active"><a class="bleft" id="link_home" href="#">HOME</a></li>
+            <li><a id="link_about_b" class="bleft" href="#">ABOUT</a></li>
+            <li><a id="link_b" class="bleft" href="#">MEALOS</a></li>
+            <li><a id="link_reg_b" class="bleft" href="#">REGISTER</a></li>
+            <li><a id="link_partners_b" class="bleft last" href="#">RESTAURANT</a></li>
+        </ul>
     </div>
-    <div>
-        <input type="submit" value="Log In"/>
+</div>
+
+<div class="container-fluid line contentt login_page">
+   <h1>Log In</h1>
+   <img src="http://vasil-y.com/wp-content/uploads/2012/10/6291334.gif" style="display: none;" id="imgProgress" style="position: absolute; top: 29%;"/>
+   <div id="loginfrm">
+   <div class="outerbtn">
+    <div class="outerfbbtn">
+        <div class="fbbtn">
+            <div class="innerfbbtn">Log in with Facebook</div>
+        </div>
     </div>
+    </div>
+    <div class="circle">
+    OR
+    </div>
+   <form method="POST" action="#" id="login">
+        <div id="loginresult">{{error}}</div>
+        <input id="username" name="username" type="text" placeholder="Username" autofocus required></br>  
+        <input id="password" name="password" type="password" placeholder="Password" required></br>
+        <button type="submit" id="submit" value="Log in"  class="btn btn-large"> Log In</button></br></br>
+        <a href="">Forgot your password?</a></br>
+        <a href="">Register</a></br>
 </form>
+   
+   
+  </div>
+  
+</div>
+
+<div id="footer">
+    <div class="footer_bot">
+        <div class="footer_bott">
+              <div class="fleft">© All Rights Reserved. .</div>
+              <div class="fright">
+                <ul id="social_b" class="socialbott inline">
+                    <li><a href="https://twitter.com/" target="_blank" original-title="twitter"><img src="img/social/icon_footer_face.png" alt=""></a></li>
+                    <li><a href="https://plus.google.com/" target="_blank" original-title="googleplus"><img src="img/social/icon_footer_g.png" alt=""></a></li>
+                    <li><a href="https://www.facebook.com/" title="facebook" target="_blank"><img src="img/social/icon_footer_tw.png" alt=""></a></li>
+
+                </ul>
+              </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.selectbox.min.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-uii.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/jquery.colorbox.js"></script>
+<script src="js/jquery.placeholder.js"></script>
+<script src="js/jquery.tweet.js"></script>
+<script src="js/jflickrfeed.min.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

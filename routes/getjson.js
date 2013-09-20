@@ -1,8 +1,7 @@
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root1234', database: 'mealo'});
-
+                                          password: 'root', database: 'mealo'});
 
 exports.all = function(req, res){
     if (connection) {

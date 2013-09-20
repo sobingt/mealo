@@ -14,6 +14,28 @@ exports.mealo = function(req,res1) {
 
 };
 
+exports.bookingmealo = function(req, res) {
+    console.log("The");
+    res.writeHead(301,{Location: '/mealo/'+req.params.id+'/booked'});
+    res.end();
+};
+
+exports.bookedmealo = function(req, res1) {
+var id = req.params.id;
+    var url = 'http://localhost:3000/get/mealo/'+id;
+	var response = '';
+	var body = '';
+	http.get(url, function(res) {
+        res.on('data', function(chunk) {
+            body += chunk;
+        });
+		res.on('end', function() {
+            response = JSON.parse(body);
+            res1.render('singlemealo', {restdata:response,id : id,url : req.url});
+        });
+    });
+};
+
 getCityRestaurants = function(req, res1){
     var city = req.params.city;
     var url = 'http://localhost:3000/get/'+req.params.city+'/restaurants';

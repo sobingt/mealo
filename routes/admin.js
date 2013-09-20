@@ -1,7 +1,7 @@
 var mysql = require('mysql')
   , http = require('http')
   , connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: '', database: 'mealo'})
+                                          password: 'root', database: 'mealo'})
   , get = require('./get');
 
 exports.isAdmin = function(req, res, next) {

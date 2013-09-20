@@ -2,8 +2,7 @@ var mysql = require('mysql');
 var http = require('http');
 
 var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root1234', database: 'mealo'});
-
+                                          password: 'root', database: 'mealo'});
 
 //FIX IT .....MAKE IT ALL POSTS OR FUNCTIONS
 										  

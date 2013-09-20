@@ -11,6 +11,7 @@ var express = require('express')
   , get = require('./routes/get')
   ,testemail=require('./routes/testemail')
   , put = require('./routes/put')
+  , auth = require('./routes/auth')
   //, mealoJson = require('./routes/json')
   , http = require('http')
   , path = require('path')
@@ -18,14 +19,17 @@ var express = require('express')
   , connect = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root1234',
+    password: 'root',
     database: "mealo"
 	})
   , gm = require('googlemaps')
   , hbs = require('hbs')
-  , passport = require('passport')
-  , passwordHash = require('password-hash')
-  , LocalStrategy = require('passport-local').Strategy;
+  , io = require('socket.io')
+  , util = require('util')
+  , connect = require('express/node_modules/connect')
+  , parseCookie = connect.utils.parseCookie
+  , MemoryStore = connect.middleware.session.MemoryStore
+  , store;
 
 var app = express();
 var parsedJSON = require('./restaurants.json');
@@ -40,22 +44,22 @@ app.use(express.logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser());
-app.use(express.session({ secret: 'keyboard cat' }));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use( express.cookieParser() );
+app.use(express.session({
+    secret: 'secret'
+    , key: 'express.sid'
+    , store: store = new MemoryStore()
+    , expires: new Date(Date.now() + (30 * 86400 * 1000))
+  }));
 app.use(app.router);
-
-  app.use(function (req, res, next) {
-    var err = req.session.error,
-        msg = req.session.success;
-    delete req.session.error;
-    delete req.session.success;
-    res.locals.message = '';
-    if (err) res.locals.message = '<p class="msg error">' + err + '</p>';
-    if (msg) res.locals.message = '<p class="msg success">' + msg + '</p>';
-    next();
+app.use(function(req, res, next){
+        res.locals.session = req.session;
+        next();
 });
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // development only
 if ('development' == app.get('env')) {
@@ -82,6 +86,13 @@ hbs.registerHelper("lastIf", function(index_count,mod,block) {
     return block.fn(this);
   }
 });
+
+hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerPartial('headPartial', 'header');
+
+hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerPartial('headPartial', 'header');
+
 //app.get('/', routes.index);
 
 app.get('/', function(req, res1) {
@@ -99,6 +110,36 @@ app.get('/', function(req, res1) {
         });
     });
 });
+app.get('/test', function (req, res) {
+  res.send(req.session.email+"is in");
+});
+app.get('/test', function (req, res) {
+  res.send(req.session.email+"is in");
+});
+
+app.get('/testing', function (req, res) {
+  req.session.value = "Cookies Babbys"
+  req.session.email = "Cookies Babbys"
+  res.send(req.session.email+ " " + req.session.auth_token);
+});
+
+
+app.get('/login',user.isAuthTokenValid, user.hasAuthToken, user.login);
+app.post('/login', user.auth, user.hasAuthToken, user.requestForAuthToken);
+app.post('/auth', auth.login);
+//app.get('/auth', auth.authredirect);
+
+app.get('/testing', function (req, res) {
+  req.session.value = "Cookies Babbys"
+  req.session.email = "Cookies Babbys"
+  res.send(req.session.email+ " " + req.session.auth_token);
+});
+
+
+app.get('/login',user.isAuthTokenValid, user.hasAuthToken, user.login);
+app.post('/login', user.auth, user.hasAuthToken, user.requestForAuthToken);
+app.post('/auth', auth.login);
+//app.get('/auth', auth.authredirect);
 
 //ADDING CODE TO SEND AN EMAIL:
 
@@ -143,9 +184,14 @@ emailService.queue(payload, function(error, result){
 
 app.get('/mealo', mealo.index);
 app.get('/mealo/:id',get.getMealo,get.getAttendes,get.getRole,mealo.mealo);
+
+app.get('/mealo/:id/failed', mealo.mealo);
+app.get('/mealo/:id/booking',user.isAuthTokenValid, mealo.bookingmealo);
+app.get('/mealo/:id/booked', mealo.bookedmealo);
 app.get('/:city/mealo/new', mealo.createmealo);
 app.post('/:city/mealo/new', mealo.createmealopost);
 app.get('/users', user.list);
+app.get('/user/:id', user.profile);
 app.get('/about', function(req, res) {
    res.render('about', {title:"About Me"});
 });
@@ -191,42 +237,21 @@ app.get('/:city/restaurants', function(req, res1) {
     }); 
 });
 
-//login code
-app.get('/login',  function(req, res) {
-  res.render('login');
+app.get('/:token/session', function(req, res1) {
+
+	req.session.auth_token=req.params.auth_token;
+    res1.send("OK")
+    res1.end()
+   
 });
 
-passport.use(new LocalStrategy(function(username, password,done){
-     if (connect) {
-        var queryString = 'SELECT username, password FROM user WHERE username = ?';
-        connect.query(queryString, [username,username], function(err, rows, fields) {
-            if (err) throw err;
-			if (rows.length > 0) {
-				pass = rows[0].password;
-				if (passwordHash.verify(password, pass)) {
-					done(null, user);
-				}
-				else {
-					return done(null, false, {message: 'Incorrect password'});
-				}
-			}
-			else {
-				return done(null, false, { message: 'Incorrect username.' });
-			}
-        });
-    }
-}));
+app.get('/:token/session', function(req, res1) {
 
-passport.serializeUser(function(user, done) {
-    done(null, 1);
+	req.session.auth_token=req.params.auth_token;
+    res1.send("OK")
+    res1.end()
+   
 });
-
-passport.deserializeUser(function(id, done) {
-    done(null, 1);
-});
-
-
-app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login'}));
 
 
 http.createServer(app).listen(app.get('port'), function(){

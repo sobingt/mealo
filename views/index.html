@@ -129,7 +129,7 @@ $( document ).ready(function() {
     <a name="id_home"></a>
         <div class="width titul">
             <div class="reg inline">
-
+<a href="#loginform" role="button" class="btn" data-toggle="modal">Login</a>{{headPartial}}
             </div>
 
             <div class="social inline fright">
@@ -594,6 +594,40 @@ $( document ).ready(function() {
     </div>
 </div>
 
+<!-- Modal -->
+<div id="loginform" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h1>Log In</h1>
+  </div>
+  <div class="modal-body">
+   <img src="http://vasil-y.com/wp-content/uploads/2012/10/6291334.gif" style="display: none;" id="imgProgress" style="position: absolute; top: 29%;"/>
+   <div id="loginfrm">
+   <div class="outerbtn">
+    <div class="outerfbbtn">
+        <div class="fbbtn">
+            <div class="innerfbbtn">Log in with Facebook</div>
+        </div>
+    </div>
+    </div>
+    <div class="circle">
+    OR
+    </div>
+   <form method="POST" action="javascript:;" id="login">
+        <div id="loginresult"></div>
+        <input id="username" name="username" type="text" placeholder="Username" autofocus required></br>  
+        <input id="password" name="password" type="password" placeholder="Password" required></br>
+        <button type="submit" id="submit" value="Log in"  class="btn btn-large"> Log In</button></br></br>
+        <a href="">Forgot your password?</a></br>
+        <a href="">Register</a></br>
+</form>
+   
+   
+  </div>
+  </div>
+</div>
+
+
     <script>
         /* <![CDATA[ */
         (function($) {
@@ -798,6 +832,7 @@ $( document ).ready(function() {
 <script src="js/jquery.tweet.js"></script>
 <script src="js/jflickrfeed.min.js"></script>
 <script src="js/scripts.js"></script>
+<script src="js/main.js"></script>
 
 <!--[if IE 8]>
 <script src="js/css3-mediaqueries.js"></script>

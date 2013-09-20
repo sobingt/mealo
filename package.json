@@ -10,9 +10,7 @@
     "hbs": "*",
     "mysql": "*",
     "nodemon": "*",
-	"googlemaps": "*",
-	"passport": "*",
-	"passport-local": "*",
-	"password-hash": "*"
+    "crypto": "*",
+	"googlemaps": "*"
   }
 }

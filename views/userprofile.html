@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Mealo - User Profile</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,200,300' rel='stylesheet' type='text/css'>
+        <link href="/css/style.css" rel="stylesheet">
+        <link href="/css/bootstrap.css" rel="stylesheet">
+        <link href="/css/resp.css" rel="stylesheet">
+        <style type="text/css">
+        </style>
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!--[if IE 8]>
+        <style type="text/css">
+            input[type="checkbox"], input[type="radio"] {
+            display: inline;
+            }
+            input[type="checkbox"] + label, input[type="radio"] + label{
+            display: inline;
+            background: none;
+            }
+        </style>
+        <![endif]-->
+        <script type="text/javascript" src="http://a.vimeocdn.com/js/froogaloop2.min.js"></script>
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.html">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.html">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.html">
+        <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.html">
+        <link rel="shortcut icon" href="../assets/ico/favicon.html">
+    </head>
+    <body>
+        <div id="fb-root"></div>
+        <div id="header" class="header">
+            <div class="width titul">
+                <div class="social inline fright">
+                    <ul id="social">
+                        <li class="bleft inline">
+                            <ul>
+                                <li><a href="https://www.facebook.com/" target="_blank"  original-title="twitter"><img src="/img/social/icon_header_face.png" alt=""></a></li>
+                                <li><a href="https://plus.google.com/" target="_blank"  original-title="googleplus"><img src="/img/social/icon_header_g.png" alt=""></a></li>
+                                <li><a href="https://twitter.com/" title="facebook" target="_blank" ><img src="/img/social/icon_header_tw.png" alt=""></a></li>
+                                <li><a href="http://www.linkedin.com/" target="_blank" original-title="linkedin"><img src="/img/social/icon_header_in.png" alt=""></a></li>
+                                <li><a href="johndoe_domainname.html" target="_self" original-title="mail"><img src="/img/social/icon_header_p.png" alt=""></a></li>
+                                <li><a href="johndoe_domainname.html" target="_self" original-title="mail"><img src="/img/social/icon_header_ball.png" alt=""></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="navigate">
+                <div class="width">
+                    <div class="logo inline">
+                        <h1 class="inline fleft">Mealo</h1>
+                    </div>
+                    <div class="navigation inline fright">
+                        <ul class="nav inline menuleft">
+                            <li><a class="bleft" href="../">Home</a></li>
+                            <li><a class="bleft" href="../#id_about">About</a></li>
+                            <li class="active"><a class="bleft" href="../#id3">Mealos</a></li>
+                            <li><a class="bleft" href="../#registr">Register</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div id="header_select">
+                    <select id="dynamic_select">
+                        <option value="" selected>Select A Page</option>
+                        <option value="../#id_about">About</option>
+                        <option value="../#id3">Mealos</option>
+                        <option value="../#id_reg">Registration</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid line contentt description_page">
+        <div class="clear"></div>
+        <div class="content description">
+            <div class="row-fluid cols">
+                <div class="span10">
+                    <!--<h1 class="decoration text-center"><span class="nobacgr">User Profile</span></h1>-->
+                    <div id="userStats" class="row-fluid clearfix">
+                        <div class="pic span4">
+                            <a href="#"><img src="../img/user_avatar.jpg" width="200" height="200" /></a>
+                        </div>
+                        <div class="data span8">
+                            <h1>Johnny Appleseed</h1>
+                            <h3>San Francisco, CA</h3>
+                            <!--<div class="sep"></div>-->
+                            <ul class="numbers clearfix">
+                                <li>Reputation<strong>185</strong></li>
+                                <li>Checkins<strong>344</strong></li>
+                                <li class="nobrdr" style="border: 0px !important;">Days Out<strong>127</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row-fluid projects font_p" >
+            <h1 class="decoration text-center"><span class="nobacgr">Mealos</span></h1>
+                <div class="row-fluid mealo-container" >
+                    <div class="span4 bordered">
+                        <div class="folder">
+                            <h4 class="text-center title"><a href="projects.html#proj7">Projects title goes here</a></h4>
+                        </div>
+                        <div class="proj_name">
+                            <div class="clear"></div>
+                            <span class="fleft author">Author Name</span>
+                            <table class="icons">
+                                <tbody>
+                                    <tr>
+                                        <td class="icos_proj_sm bleft"><a class="group1" href="img/proj1.jpg" title=""><img src="img/icon_search.png" alt=""></a></td>
+                                        <td class="icos_proj_sm bleft"><a href="projects.html#proj7"><img src="img/icon_lock.png" alt=""></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="folder border">
+                            <a href="projects.html#proj7">
+                                <div class="author_proj proj_1" ></div>
+                            </a>
+                        </div>
+                        <div class="folder lorem lines">
+                            <div id="project7" value="645" class="slider"></div>
+                        </div>
+                        <p class="descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate egestas sem, eu cursus ligula ullamcorper non. Curabitur tristique velit eu</p>
+                        <div class="folder price topbordered">
+                            <div class="span4">
+                                <strong class="green"><span>$</span><span class="project_value" href="#project7">26</span></strong>
+                                <p>pledged</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>80</strong>
+                                <p>backers</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>25</strong>
+                                <p>days to go</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4 bordered">
+                        <div class="folder">
+                            <h4 class="text-center title"><a href="projects.html#proj8">Projects title goes here</a></h4>
+                        </div>
+                        <div class="proj_name">
+                            <div class="clear"></div>
+                            <span class="fleft author">Author Name</span>
+                            <table class="icons">
+                                <tbody>
+                                    <tr>
+                                        <td class="icos_proj_sm bleft"><a class="group1" href="img/proj2.jpg" title=""><img src="img/icon_search.png" alt=""></a></td>
+                                        <td class="icos_proj_sm bleft"><a href="projects.html#proj8"><img src="img/icon_lock.png" alt=""></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="folder border">
+                            <a href="projects.html#proj8">
+                                <div class="author_proj proj_2"></div>
+                            </a>
+                        </div>
+                        <div class="folder lorem lines">
+                            <div id="project8" value="132" class="slider"></div>
+                        </div>
+                        <p class="descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate egestas sem, eu cursus ligula ullamcorper non. Curabitur tristique velit eu</p>
+                        <div class="folder price topbordered">
+                            <div class="span4">
+                                <strong class="green"><span>$</span><span class="project_value" href="#project8">123</span></strong>
+                                <p>pledged</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>80</strong>
+                                <p>backers</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>25</strong>
+                                <p>days to go</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4 bordered">
+                        <div class="folder">
+                            <h4 class="text-center title"><a href="projects.html#proj9">Projects title goes here</a></h4>
+                        </div>
+                        <div class="proj_name">
+                            <div class="clear"></div>
+                            <span class="fleft author">Author Name</span>
+                            <table class="icons">
+                                <tbody>
+                                    <tr>
+                                        <td class="icos_proj_sm bleft"><a class="group1" href="img/proj3.jpg" title=""><img src="img/icon_search.png" alt=""></a></td>
+                                        <td class="icos_proj_sm bleft"><a href="projects.html#proj9"><img src="img/icon_lock.png" alt=""></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="folder border">
+                            <a href="projects.html#proj9">
+                                <div class="author_proj proj_3"></div>
+                            </a>
+                        </div>
+                        <div class="folder lorem lines">
+                            <div id="project9" value="765" class="slider"></div>
+                        </div>
+                        <p class="descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate egestas sem, eu cursus ligula ullamcorper non. Curabitur tristique velit eu</p>
+                        <div class="folder price topbordered">
+                            <div class="span4">
+                                <strong class="green"><span>$</span><span class="project_value" href="#project9">154</span></strong>
+                                <p>pledged</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>80</strong>
+                                <p>backers</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>25</strong>
+                                <p>days to go</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="decoration text-center"><span class="nobacgr">Mealos</span></h1>
+                <div class="row-fluid mealo-container" >
+                    <div class="span4 bordered">
+                        <div class="folder">
+                            <h4 class="text-center title"><a href="projects.html#proj10">Projects title goes here</a></h4>
+                        </div>
+                        <div class="proj_name">
+                            <div class="clear"></div>
+                            <span class="fleft author">Author Name</span>
+                            <table class="icons">
+                                <tbody>
+                                    <tr>
+                                        <td class="icos_proj_sm bleft"><a class="group1" href="img/proj4.jpg" title=""><img src="img/icon_search.png" alt=""></a></td>
+                                        <td class="icos_proj_sm bleft"><a href="projects.html#proj10"><img src="img/icon_lock.png" alt=""></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="folder border">
+                            <a href="projects.html#proj10">
+                                <div class="author_proj proj_4"></div>
+                            </a>
+                        </div>
+                        <div class="folder lorem lines">
+                            <div id="project10" value="125" class="slider"></div>
+                        </div>
+                        <p class="descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate egestas sem, eu cursus ligula ullamcorper non. Curabitur tristique velit eu</p>
+                        <div class="folder price topbordered">
+                            <div class="span4">
+                                <strong class="green"><span>$</span><span class="project_value" href="#project10">98</span></strong>
+                                <p>pledged</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>80</strong>
+                                <p>backers</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>25</strong>
+                                <p>days to go</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4 bordered">
+                        <div class="folder">
+                            <h4 class="text-center title"><a href="projects.html#proj11">Projects title goes here</a></h4>
+                        </div>
+                        <div class="proj_name">
+                            <div class="clear"></div>
+                            <span class="fleft author">Author Name</span>
+                            <table class="icons">
+                                <tbody>
+                                    <tr>
+                                        <td class="icos_proj_sm bleft"><a class="group1" href="img/proj5.jpg" title=""><img src="img/icon_search.png" alt=""></a></td>
+                                        <td class="icos_proj_sm bleft"><a href="projects.html#proj11"><img src="img/icon_lock.png" alt=""></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="folder border">
+                            <a href="projects.html#proj11">
+                                <div class="author_proj proj_5"></div>
+                            </a>
+                        </div>
+                        <div class="folder lorem lines">
+                            <div id="project11" value="876" class="slider"></div>
+                        </div>
+                        <p class="descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate egestas sem, eu cursus ligula ullamcorper non. Curabitur tristique velit eu</p>
+                        <div class="folder price topbordered">
+                            <div class="span4">
+                                <strong class="green"><span>$</span><span class="project_value" href="#project11">76</span></strong>
+                                <p>pledged</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>80</strong>
+                                <p>backers</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>25</strong>
+                                <p>days to go</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4 bordered">
+                        <div class="folder">
+                            <h4 class="text-center title"><a href="projects.html#proj12">Projects title goes here</a></h4>
+                        </div>
+                        <div class="proj_name">
+                            <div class="clear"></div>
+                            <span class="fleft author">Author Name</span>
+                            <table class="icons">
+                                <tbody>
+                                    <tr>
+                                        <td class="icos_proj_sm bleft"><a class="group1" href="img/proj6.jpg" title=""><img src="img/icon_search.png" alt=""></a></td>
+                                        <td class="icos_proj_sm bleft"><a href="projects.html#proj12"><img src="img/icon_lock.png" alt=""></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="folder border">
+                            <a href="projects.html#proj12">
+                                <div class="author_proj proj_6"></div>
+                            </a>
+                        </div>
+                        <div class="folder lorem lines">
+                            <div id="project12" value="875" class="slider"></div>
+                        </div>
+                        <p class="descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate egestas sem, eu cursus ligula ullamcorper non. Curabitur tristique velit eu</p>
+                        <div class="folder price topbordered">
+                            <div class="span4">
+                                <strong class="green"><span>$</span><span class="project_value" href="#project12">200</span></strong>
+                                <p>pledged</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>80</strong>
+                                <p>backers</p>
+                            </div>
+                            <div class="span4 bleft">
+                                <strong>25</strong>
+                                <p>days to go</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="footer_bot">
+                <div class="footer_bott">
+                    <div class="fleft">© All Rights Reserved. Made with Bits.</div>
+                    <div class="fright">
+                        <ul id="social_b" class="socialbott inline">
+                            <li><a href="https://twitter.com/" target="_blank" original-title="twitter"><img src="/img/social/icon_footer_face.png" alt=""></a></li>
+                            <li><a href="https://plus.google.com/" target="_blank" original-title="googleplus"><img src="/img/social/icon_footer_g.png" alt=""></a></li>
+                            <li><a href="https://www.facebook.com/" title="facebook" target="_blank"><img src="/img/social/icon_footer_tw.png" alt=""></a></li>
+                            <li><a href="http://www.linkedin.com/" target="_blank" original-title="linkedin"><img src="/img/social/icon_footer_in.png" alt=""></a></li>
+                            <li><a href="http://www.linkedin.com/" target="_self" original-title="mail"><img src="/img/social/icon_footer_p.png" alt=""></a></li>
+                            <li><a href="http://www.linkedin.com/" target="_self" original-title="mail"><img src="/img/social/icon_footer_ball.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <script src="/js/jquery.js"></script>
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/jquery.placeholder.js"></script>
+        <script src="/js/css3-mediaqueries.js"></script>
+        <script>
+            /* <![CDATA[ */
+            $("#link_pledges_block_info_link_1").click(function() {
+                if ($('#pledges_block_info_1').is(':visible'))
+                {
+                    $('#link_pledges_block_info_link_1').addClass('not_active');
+                    $("#pledges_block_info_1").toggle();
+                }
+                else
+                {
+                    $('#link_pledges_block_info_link_1').removeClass('not_active');
+                    $("#pledges_block_info_1").toggle();
+                }
+            });
+            
+            $("#link_pledges_block_info_link_2").click(function() {
+                if ($('#pledges_block_info_2').is(':visible'))
+                {
+                    $('#link_pledges_block_info_link_2').addClass('not_active');
+                    $("#pledges_block_info_2").toggle();
+                }
+                else
+                {
+                    $('#link_pledges_block_info_link_2').removeClass('not_active');
+                    $("#pledges_block_info_2").toggle();
+                }
+            });
+            
+            $("#link_pledges_block_info_link_3").click(function() {
+                if ($('#pledges_block_info_3').is(':visible'))
+                {
+                    $('#link_pledges_block_info_link_3').addClass('not_active');
+                    $("#pledges_block_info_3").toggle();
+                }
+                else
+                {
+                    $('#link_pledges_block_info_link_3').removeClass('not_active');
+                    $("#pledges_block_info_3").toggle();
+                }
+            });
+            
+            $("#link_pledges_block_info_link_4").click(function() {
+                if ($('#pledges_block_info_4').is(':visible'))
+                {
+                    $('#link_pledges_block_info_link_4').addClass('not_active');
+                    $("#pledges_block_info_4").toggle();
+                }
+                else
+                {
+                    $('#link_pledges_block_info_link_4').removeClass('not_active');
+                    $("#pledges_block_info_4").toggle();
+                }
+            });
+            
+            $("#link_pledges_block_info_link_5").click(function() {
+                if ($('#pledges_block_info_5').is(':visible'))
+                {
+                    $('#link_pledges_block_info_link_5').addClass('not_active');
+                    $("#pledges_block_info_5").toggle();
+                }
+                else
+                {
+                    $('#link_pledges_block_info_link_5').removeClass('not_active');
+                    $("#pledges_block_info_5").toggle();
+                }
+            });
+            
+            $("#link_pledges_block_info_link_6").click(function() {
+                if ($('#pledges_block_info_6').is(':visible'))
+                {
+                    $('#link_pledges_block_info_link_6').addClass('not_active');
+                    $("#pledges_block_info_6").toggle();
+                }
+                else
+                {
+                    $('#link_pledges_block_info_link_6').removeClass('not_active');
+                    $("#pledges_block_info_6").toggle();
+                }
+            });
+            
+            $("#link_pledges_block_info_link_7").click(function() {
+                if ($('#pledges_block_info_7').is(':visible'))
+                {
+                    $('#link_pledges_block_info_link_7').addClass('not_active');
+                    $("#pledges_block_info_7").toggle();
+                }
+                else
+                {
+                    $('#link_pledges_block_info_link_7').removeClass('not_active');
+                    $("#pledges_block_info_7").toggle();
+                }
+            });
+            
+            $(function(){
+                var iframe = $('#player1')[0];
+                var player = $f("iframe");
+                var $myCarousel = $('#myCarousel');
+            
+                player.addEvent('ready', function() {
+                    // player.addEvent('pause', onPause);
+                    player.addEvent('play', onPlay);
+                    //player.addEvent('playProgress', onPlayProgress);
+                });
+            
+            
+                $('#myCarousel').bind('slide', function(){
+                    player.api('pause');
+                    $('#myCarousel').carousel({
+                        interval: 6000
+                    })
+                });
+            
+            
+                function onPlay(id) {
+                    $myCarousel.carousel('pause');
+                }
+            
+            
+            });
+            
+            /* ]]> */
+            
+            
+        </script>
+        <script>
+            /* <![CDATA[ */
+            var a = $('.left_content_descr').height();
+            $('.sidebar_descr').height(a - 70);
+            /* ]]> */
+            
+        </script>
+        <script>
+            /* <![CDATA[ */
+            $('#myCarousel').hover(function() {
+                $('#visiblepanel').toggle();
+            });
+            /* ]]> */
+            
+            
+        </script>
+        <script>
+            /* <![CDATA[ */
+            $(function(){
+                // bind change event to select
+                $('#dynamic_select').bind('change', function () {
+                    var url = $(this).val(); // get selected value
+                    if (url) { // require a URL
+                        window.location = url; // redirect
+                    }
+                    return false;
+                });
+            });
+            /* ]]> */
+            
+        </script>
+    </body>
+</html>
