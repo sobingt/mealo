@@ -23,8 +23,10 @@
         height: 320px;
       }
     </style>
+	{{/each}}
 	<script>
 	
+			{{#each restdata1}}
 		var latLong = new google.maps.LatLng({{latitude}}, {{longitude}});
 		function initialize() {
 								var mapOptions = {
@@ -57,8 +59,6 @@
         }
     </style>
     <![endif]-->
-
-    <script type="text/javascript" src="http://a.vimeocdn.com/js/froogaloop2.min.js"></script>
 
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.html">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.html">
@@ -188,14 +188,11 @@
             <div id="description_content">
 			
                 <div class="title_description_content">{{description}}</div>
-                <div class="text_description_content"></div>
-                <div class="text_description_content"> </div>
-                <div class="text_description_content"></div>				
+                <div class="text_description_content">{{menu}}</div>
+                <div class="text_description_content"> {{restaurant}}</div>
+                <div class="text_description_content">{{restaurantdesc}}</div>				
             </div>
-			<div class="payment_getaway_button">
-                <button class="btn btn-large make_payment" type="button">
-                    <small>EDIT/DELETE/GO</small>
-                </button>
+			<div class="edit_test">
             </div>
         </div>
       
@@ -309,27 +306,29 @@
     </div>-->
     <div id="payment_getaway">
         <!--<h3 class="text-center payment_getaway_name"><span class="title_h3 left_t"></span>Payment Getaway<span class="title_h3 right_t"></span></h3>-->
-        <h3 class="decoration text-center"><span class="nobacgr_desc">Payment Getaway</span></h3>
         <div class="payment_getaway_block">
-            <div class="payment_cost">Rs. {{cost}}</div>
+			 <div class="payment_cost"><!--Rs. --></div>
             <div class="your_card">
-                <h3>Choose Your Card:</h3>
+                <!--
+				<h3>Choose Your Meal:</h3>
 
                 <ul class="choose">
                     <li>
                         <input id="rfirst" type="radio" name="radio" checked hidden />
-                        <label for="rfirst">Visa</label>
+						
+						{{#each cost}}
+                        <label for="rfirst">Veg:Rs/{{Veg}}-</label>
                     </li>
                     <li>
                         <input id="rsecond" type="radio" name="radio" hidden />
-                        <label for="rsecond">MasterCard</label>
+                        <label for="rsecond">Non Veg:Rs/{{Nonveg}}-</label>
+						{{/each}}
+			
                     </li>
                 </ul>
-            </div>
+				-->
+            </div> 
             <div class="payment_getaway_button">
-                <button class="btn btn-large make_payment" onClick='javascript:window.location.href = "/mealo/{{id}}/booking";' type="button">
-                    <small>Make Payment</small>
-                </button>
             </div>
         </div>
     </div>
@@ -453,32 +452,6 @@
         }
     });
 
-    $(function(){
-        var iframe = $('#player1')[0];
-        var player = $f("iframe");
-        var $myCarousel = $('#myCarousel');
-
-        player.addEvent('ready', function() {
-            // player.addEvent('pause', onPause);
-            player.addEvent('play', onPlay);
-            //player.addEvent('playProgress', onPlayProgress);
-        });
-
-
-        $('#myCarousel').bind('slide', function(){
-            player.api('pause');
-            $('#myCarousel').carousel({
-                interval: 6000
-            })
-        });
-
-
-        function onPlay(id) {
-            $myCarousel.carousel('pause');
-        }
-
-
-    });
 
     /* ]]> */
 
@@ -516,7 +489,49 @@
     /* ]]> */
 
 </script>
-</body>
-</html>
 
 {{/each}}
+<script>
+$(document).ready( function(){
+					var classrole=$(".edit_test");
+					var classrole2=$(".payment_getaway_button");
+					var classrole3=$(".payment_cost");
+					var classrole4=$(".your_card");
+					var role="{{role}}";
+					{{#each restdata1}}
+				if(role=="creator")
+				{
+					//alert("creator");
+					classrole.html('<button class="btn btn-large make_payment" type="button"><small>Edit Mealo</small></button>');
+					classrole2.html('<button class="btn btn-large make_payment" type="button"><small>Cancel Mealo</small></button>');
+					classrole3.html('Want to cancel');
+					classrole4.html('cancel??');
+				}
+				else if(role=="attende")
+				{
+					//alert("Not a creator");
+					classrole3.html('<button class="btn btn-large make_payment" type="button"><small>Cancel Mealo</small></button>');
+					//classrole3.html('Want to');
+					//classrole4.html('cancel??');
+					
+				}
+				{{#each cost}}
+				else if(role=="registeredmember")
+				{
+						classrole3.html('Rs.'+'{{Veg}}');
+						classrole4.html('<h3>Choose Your Meal:</h3><ul class="choose"><li><input id="rfirst" type="radio" name="radio" checked hidden/><label for="rfirst">Veg:Rs. '+'{{Veg}}'+'</label></li><li><input id="rsecond" type="radio" name="radio" hidden /><label  for="rsecond">Non Veg:Rs .'+'{{Nonveg}}'+'</label></li></ul>');
+						classrole2.html('<button class="btn btn-large make_payment" type="button"><small>Book Mealo</small></button>');
+				}
+				else if(role=="unregistered")
+				{
+						classrole3.html('Rs.');
+						classrole4.html('<h3>Choose Your Meal:</h3><ul class="choose"><li><input id="rfirst" type="radio" name="radio" checked hidden/><label for="rfirst">Veg:Rs. '+'{{Veg}}'+'</label></li><li><input id="rsecond" type="radio" name="radio" hidden /><label  for="rsecond">Non Veg:Rs .'+'{{Nonveg}}'+'</label></li></ul>');
+						classrole2.html('<button class="btn btn-large make_payment" type="button"><small>Book Mealo</small></button>');
+				
+				}
+		});	
+</script>
+{{/each}}
+{{/each}}
+</body>
+</html>
