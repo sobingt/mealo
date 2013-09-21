@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+<title>
+Register for mealo
+</title>
+<script src="js/jquery.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#repassword").keyup(checkPasswordMatch);
+	
+	function checkPasswordMatch() {
+    var password = $("#password").val();
+    var confirmPassword = $("#repassword").val();
+
+    if (password != confirmPassword)
+        $("#divCheckPasswordMatch").html("Passwords do not match!");
+    else
+        $("#divCheckPasswordMatch").html("Passwords match.");
+}
+
+});
+</script>
+</head>
+<body>
+	<h1>Register for mealo</h1>
+	<form name="input" action="#" method="POST" id="register">
+		First Name:<input type="text" name="firstname" placeholder="First Name" required="required" autofocus><br>
+		Last Name:<input type="text" name="lastname" placeholder="Last Name" required="required"><br>
+		Email:<input type="email" name="email" placeholder="Email" required="required"><br>
+		UserName:<input type="text" name="username" placeholder="User name" required="required"><br>
+		Password:<input type="password" name="password" id="password" placeholder="Password" required="required"><br>
+		Re-Enter Password:<input type="password" name="repassword" id="repassword" placeholder="Re-Password" required="required" onChange="checkPasswordMatch();"><br>
+		<button type="submit" id="submit" value="Register">Register</button>
+	</form>
+	<div class="registrationFormAlert" id="divCheckPasswordMatch"></div>
+</body>
+</html>

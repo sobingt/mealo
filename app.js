@@ -19,12 +19,11 @@ var express = require('express')
   , connect = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: 'root1234',
     database: "mealo"
 	})
   , gm = require('googlemaps')
   , hbs = require('hbs')
-  , io = require('socket.io')
   , util = require('util')
   , connect = require('express/node_modules/connect')
   , parseCookie = connect.utils.parseCookie
@@ -72,6 +71,7 @@ hbs.registerHelper("moduloIf", function(index_count,mod,block) {
     return block.fn(this);
   }
 });
+
 
 hbs.registerHelper("limit", function(index_count,limit,block) {
   if(parseInt(index_count)< limit-1 )
@@ -125,6 +125,10 @@ app.get('/testing', function (req, res) {
 
 
 app.get('/login',user.isAuthTokenValid, user.hasAuthToken, user.login);
+app.get('/register',user.register);
+app.post('/register',user.insertUser);
+app.get('/forgetpassword',user.forgetPassword);
+app.post('/forgetpassword',user.resetPassword);
 app.post('/login', user.auth, user.hasAuthToken, user.requestForAuthToken);
 app.post('/auth', auth.login);
 //app.get('/auth', auth.authredirect);

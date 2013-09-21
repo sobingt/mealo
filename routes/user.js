@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root', database: 'mealo'});
+                                          password: 'root1234', database: 'mealo'});
 /*
  * GET users listing.
  */
@@ -21,6 +21,36 @@ exports.login = function(req, res1){
     res1.render('login');
 };
 
+exports.register = function(req, res1){
+    res1.render('register');
+};
+
+exports.forgetPassword = function(req, res1){
+    res1.render('forgetpassword');
+};
+
+exports.resetPassword = function(req, res1){
+    //res1.render('forgetpassword');
+	Yet to add
+};
+
+exports.insertUser =function(req,res1){
+	var firstName=req.body.firstname;
+	var lastName=req.body.lastname;
+	var emailId=req.body.email;
+	var userName=req.body.username;
+	var password=crypto.createHash('md5').update(req.body.password).digest("hex");
+	var queryString="INSERT INTO user(fname,lname,email,username,password) values(?,?,?,?,?);";
+	connection.query(queryString,[firstName,lastName,emailId,userName,password],function(err, rows) {
+            if (err) throw err;
+            else
+			{
+				res1.writeHead(301,{Location: '/login/'});
+				res1.end();
+			}
+        });
+
+};
 
 exports.auth = function(req, res, next){
     var username = req.body.username;
