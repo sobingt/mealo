@@ -129,6 +129,7 @@ app.post('/resetpassword/:uid',user.setNewPasswordConfirm);
 app.get('/login',user.isAuthTokenValid, user.hasAuthToken, user.login);
 app.get('/register',user.register);
 app.post('/register',user.insertUser);
+app.get('/activate/:hashkey',user.activateUser);
 app.get('/forgetpassword',user.forgetPassword);
 app.post('/forgetpassword',user.resetPassword);
 app.post('/login', user.auth, user.hasAuthToken, user.requestForAuthToken);

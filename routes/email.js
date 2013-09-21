@@ -29,7 +29,7 @@ exports.mealoRegistration=function(link,email){
 		var data={
 			"link":link
 			};
-		email(id,email,data);
+		exports.email(id,email,data);
 };
 
 exports.mealoWelcome=function(name,email){
@@ -37,7 +37,7 @@ exports.mealoWelcome=function(name,email){
 	var data={
 		"name":name
 		};
-	email(id,email,data);
+	exports.email(id,email,data);
 };
 
 exports.mealoCreationToHost=function(name,restaurantName,menuType,mealoTime,email){
@@ -48,7 +48,7 @@ exports.mealoCreationToHost=function(name,restaurantName,menuType,mealoTime,emai
 		"menuType":menuType,
 		"mealoTime":mealoTime
 		};
-	email(id,email,data);
+	exports.email(id,email,data);
 };
 
 
@@ -59,7 +59,7 @@ exports.newAttendeToHost=function(hostName,attendeName,mealoTime,email){
 		"attendeName":attendeName,
 		"mealoTime":mealoTime
 		};
-	email(id,email,data);
+	exports.email(id,email,data);
 };
 
 exports.attendeCancelToHost=function(hostName,attendeName,mealoTime,email){
@@ -69,7 +69,7 @@ exports.attendeCancelToHost=function(hostName,attendeName,mealoTime,email){
 		"attendeName":attendeName,
 		"mealoTime":mealoTime
 		};
-	email(id,email,data);
+	exports.email(id,email,data);
 };
 
 exports.mealoCancelToAttende=function(hostName,attendeName,mealoTime,email){
@@ -79,7 +79,7 @@ exports.mealoCancelToAttende=function(hostName,attendeName,mealoTime,email){
 		"attendeName":attendeName,
 		"mealoTime":mealoTime
 		};
-	email(id,email,data);
+	exports.email(id,email,data);
 };
 
 exports.mealoConfirmToRestaurant=function(restaurantName,mealoTime,menuType,noOfAttendes,email){
@@ -90,7 +90,7 @@ exports.mealoConfirmToRestaurant=function(restaurantName,mealoTime,menuType,noOf
 		"menuType" :menuType,
 		"noOfAttendes" :noOfAttendes
 		};
-	email(id,email,data);
+	exports.email(id,email,data);
 };
 
 exports.mealoReminder=function(restaurantName,mealoTime,attendeName,email){
@@ -100,7 +100,7 @@ exports.mealoReminder=function(restaurantName,mealoTime,attendeName,email){
 		"mealoTime":mealoTime,
 		"attendeName":attendeName
 		};
-	email(id,email,data);
+	exports.email(id,email,data);
 };
 
 exports.forgotPassword=function(userName,link,email){

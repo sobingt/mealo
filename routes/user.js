@@ -71,15 +71,54 @@ exports.insertUser =function(req,res1){
 	var emailId=req.body.email;
 	var userName=req.body.username;
 	var password=crypto.createHash('md5').update(req.body.password).digest("hex");
-	var queryString="INSERT INTO user(fname,lname,email,username,password) values(?,?,?,?,?);";
-	connection.query(queryString,[firstName,lastName,emailId,userName,password],function(err, rows) {
+	var hashKey=crypto.randomBytes(24).toString('hex');
+	var queryString="INSERT INTO usertemp(fname,lname,email,uname,password,hashkey) values(?,?,?,?,?,?);";
+	connection.query(queryString,[firstName,lastName,emailId,userName,password,hashKey],function(err, rows) {
             if (err) throw err;
             else
 			{
-				res1.writeHead(301,{Location: '/login/'});
-				res1.end();
+				var link=config.host.url+config.host.port+'/activate/'+hashKey;
+				email.mealoRegistration(link,emailId);
 			}
         });
+
+};
+
+exports.activateUser =function(req,res1){
+	var hashKey = req.params.hashkey;
+    if (connection) {
+        var queryString = 'SELECT fname,lname,email,uname,password,hashkey  FROM usertemp WHERE hashkey=?;';
+        
+        connection.query(queryString,[hashKey], function(err, rows) {
+            if (err) throw err;
+			else
+			{
+				if(rows.length <=0)
+				{
+				
+				}
+				else
+				{
+					var queryInsert="INSERT INTO user(fname,lname,email,username,password) values(?,?,?,?,?);";
+					connection.query(queryInsert,[rows[0].fname,rows[0].lname,rows[0].email,rows[0].uname,rows[0].password],function(err,rows1){
+						if(err) throw err;
+						else
+						{
+							var queryDelete="DELETE from usertemp where hashkey=?";
+							connection.query(queryDelete,[hashKey],function(err,rows3){
+								if(err) throw err;
+								else
+								{
+									res1.writeHead(301,{Location: '/login/'});
+									res1.end();
+								}
+							});
+						}
+					  });	
+				}
+			}
+        });
+    }
 
 };
 
