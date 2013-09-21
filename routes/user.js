@@ -6,7 +6,10 @@ var connection = mysql.createConnection({ host: 'localhost', user: 'root',
  */
 var crypto = require('crypto')
     , http = require('http')
-    , request = require('request');
+    , request = require('request')
+	,email=require('./email.js')
+	,config=require('../config.js');
+	
     
 exports.list = function(req, res){
   res.send("respond with a resource");
@@ -31,7 +34,35 @@ exports.forgetPassword = function(req, res1){
 
 exports.resetPassword = function(req, res1){
     //res1.render('forgetpassword');
-	Yet to add
+	var userEmail=req.body.email;
+	var queryString="Select email,uid,fname from user where email=?";
+	connection.query(queryString,[userEmail],function(err,rows){
+		if(err) throw err;
+		else
+		{
+			if(rows.length <=0)
+			{
+			
+			}
+			else
+			{
+				var hashKey=crypto.randomBytes(24).toString('hex');
+				var queryString2="Insert into passwordreset(uid,hashkey) values(?,?)";
+				connection.query(queryString2,[rows[0].uid,hashKey],function (err1,rows1){
+					if(err) throw err;
+					else
+					{
+						console.log(rows[0].uid);
+						var link=config.host.url+config.host.port+'/reset/'+hashKey;
+						//SEND EMAIL
+						email.forgotPassword(rows[0].fname,link,rows[0].email);
+					}
+			});
+			}
+		}
+		
+		});
+	
 };
 
 exports.insertUser =function(req,res1){
@@ -51,6 +82,28 @@ exports.insertUser =function(req,res1){
         });
 
 };
+
+exports.setNewPasswordConfirm=function(req,res1){
+	var uid=req.params.uid;
+	var password=crypto.createHash('md5').update(req.body.password).digest("hex");
+	var queryString="UPDATE user set password=? where uid=?;";
+	connection.query(queryString,[password,uid],function(err, rows) {
+            if (err) throw err;
+            else
+			{
+				res1.writeHead(301,{Location: '/login/'});
+				res1.end();
+			}
+        });
+
+};
+
+exports.setNewPassword =function(req,res1){
+	var uid=req.params.uid;
+	res1.render('resetpassword',{uid:uid});
+
+};
+
 
 exports.auth = function(req, res, next){
     var username = req.body.username;

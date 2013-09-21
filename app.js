@@ -123,7 +123,9 @@ app.get('/testing', function (req, res) {
   res.send(req.session.email+ " " + req.session.auth_token);
 });
 
-
+app.get('/reset/:hashkey',get.resetPassword);
+app.get('/resetpassword/:uid',user.setNewPassword);
+app.post('/resetpassword/:uid',user.setNewPasswordConfirm);
 app.get('/login',user.isAuthTokenValid, user.hasAuthToken, user.login);
 app.get('/register',user.register);
 app.post('/register',user.insertUser);

@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var http = require('http');
 
 var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root', database: 'mealo'});
+                                          password: 'root1234', database: 'mealo'});
 
 //FIX IT .....MAKE IT ALL POSTS OR FUNCTIONS
 										  
@@ -74,10 +74,12 @@ exports.restaurantMenuType = function(req, res){
 exports.mealo = function(req, res){
     var id = req.params.id;
     if (connection) {
-        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost,u.profileimg FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a,user u) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid AND mealo.uid=u.uid WHERE mealo.id = ?';
+        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant,r.description as restaurantdesc, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost,u.profileimg FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a,user u) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid AND mealo.uid=u.uid WHERE mealo.id = ?';
         connection.query(queryString, [id], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
+			rows[0].cost = JSON.parse(rows[0].cost);
+			console.log(rows[0].cost);
             res.write(JSON.stringify(rows));
             res.end();
         });
@@ -99,7 +101,7 @@ exports.attendes = function(req, res){
 
 exports.allmealos = function(req, res){
     if (connection) {
-        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid';
+        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant,r.description AS restaurantdesc, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid';
         //console.log(queryString);
         //res.write(queryString);
         connection.query(queryString, function(err, rows, fields) {
@@ -208,6 +210,28 @@ exports.cityMenuType = function(req, res){
     }
 };
 
+exports.resetPassword = function(req, res){
+    var hashKey = req.params.hashkey;
+    if (connection) {
+        var queryString = 'SELECT uid,hashkey  FROM passwordreset WHERE hashkey=?;';
+        
+        connection.query(queryString,[hashKey], function(err, rows) {
+            if (err) throw err;
+			else
+			{
+				if(rows.length <=0)
+				{
+				
+				}
+				else
+				{
+					res.writeHead(301,{Location: '/resetpassword/'+rows[0].uid});
+					res.end();
+				}
+			}
+        });
+    }
+};
 
 
 
@@ -280,17 +304,9 @@ exports.getRole=function(req,res1,next) {
 	console.log("inside get roleeeee");
 	var creatorid=res1.response1[0].uid;
 	console.log(creatorid);
-	if(typeof uid !=undefined)
-	{
-		
-	}
-	else
-	{
-	
-	
-	
-	}
+	var role="";
+	role="registeredmember";
+	res1.response3=role;
 	next();
-
 
 };

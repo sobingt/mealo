@@ -5,12 +5,29 @@ module.exports = {
     client_secret:  'be91a962a85077f202a60ed2dcc89947',
     scope:      'email, user_about_me, user_birthday, user_location, publish_stream, read_stream, friends_location',
     redirect_uri:   'http://localhost:3000/'
-  }
+  },
   database: {
     host:       'localhost',
     user:       'root',
-    password:   'root',
+    password:   'root1234',
     database:   'mealo'
-  }
-
+  },
+  mail: {
+	from : "support@mealo.in",
+    fromAuthor: "Mealo Team",
+	mealoRegistrationId:2955,
+	mealoWelcomeId:2956,
+	mealoCreationToHostId:2957,
+    newAttendeToHostId:2958,
+	attendeCancelToHostId:2959,
+	mealoCancelToAttendeId:2960,
+	mealoConfirmToRestaurantId:2961,
+	mealoReminderId:2962,
+	mealoForgetPasswordId:2976
+  },
+  host:
+  {
+	url:"http://localhost:",
+	port:3000
+  }	
 };
