@@ -5,6 +5,7 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , config = require('./config')
   , user = require('./routes/user')
   , admin = require('./routes/admin')
   , mealo = require('./routes/mealo')
@@ -12,16 +13,15 @@ var express = require('express')
   ,testemail=require('./routes/testemail')
   , put = require('./routes/put')
   , auth = require('./routes/auth')
+  , payment = require('./routes/payment')
+  , upload = require('./routes/upload')
+  , invoice = require('./routes/invoice')
+  , facebook = require('./routes/facebook')
   //, mealoJson = require('./routes/json')
   , http = require('http')
   , path = require('path')
   , mysql = require('mysql')
-  , connect = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root1234',
-    database: "mealo"
-	})
+  , fs = require('fs')
   , gm = require('googlemaps')
   , hbs = require('hbs')
   , util = require('util')
@@ -89,27 +89,15 @@ hbs.registerHelper("lastIf", function(index_count,mod,block) {
 
 hbs.registerPartials(__dirname + '/views/partials');
 hbs.registerPartial('headPartial', 'header');
+hbs.registerPartial('searchPartial', 'search');
 
-hbs.registerPartials(__dirname + '/views/partials');
-hbs.registerPartial('headPartial', 'header');
 
-//app.get('/', routes.index);
+var access = fs.createWriteStream(__dirname + '/node.access.log', { flags: 'a' })
+      , error = fs.createWriteStream(__dirname + '/node.error.log', { flags: 'a' });
 
-app.get('/', function(req, res1) {
-    var url = 'http://localhost:3000/getmealo';
-	var response = '';
-	var body = '';
-	http.get(url, function(res) {
-        res.on('data', function(chunk) {
-            body += chunk;
-        });
-		res.on('end', function() {
-            response = JSON.parse(body);
-			res1.render('index', {restdata:response});
-            console.log(response);
-        });
-    });
-});
+app.get('/pay', payment.testprepay, payment.pay);
+
+app.get('/',routes.mealos,routes.restaurants,routes.index);
 app.get('/test', function (req, res) {
   res.send(req.session.email+"is in");
 });
@@ -134,6 +122,7 @@ app.get('/forgetpassword',user.forgetPassword);
 app.post('/forgetpassword',user.resetPassword);
 app.post('/login', user.auth, user.hasAuthToken, user.requestForAuthToken);
 app.post('/auth', auth.login);
+app.get('/auth/facebook', facebook.authfacebook, facebook.getuser, facebook.createuser);
 //app.get('/auth', auth.authredirect);
 
 app.get('/testing', function (req, res) {
@@ -142,11 +131,6 @@ app.get('/testing', function (req, res) {
   res.send(req.session.email+ " " + req.session.auth_token);
 });
 
-
-app.get('/login',user.isAuthTokenValid, user.hasAuthToken, user.login);
-app.post('/login', user.auth, user.hasAuthToken, user.requestForAuthToken);
-app.post('/auth', auth.login);
-//app.get('/auth', auth.authredirect);
 
 //ADDING CODE TO SEND AN EMAIL:
 
@@ -178,6 +162,9 @@ emailService.queue(payload, function(error, result){
 
 });
 
+// middleware
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: __dirname + "/public/uploads" }))
+
 //END OF ADDITION
 
 //adding for email:
@@ -189,11 +176,17 @@ emailService.queue(payload, function(error, result){
 
 //end of addition for email
 
+app.post('/search', routes.search);
+app.get('/invoice', invoice.invoice);
+
+//app.get('/create', upload.uploadFile, upload.addPhoto)
+app.post('/', routes.uploadfile, routes.createmealo, invoice.createinvoice, invoice.createinvoice, invoice.invoice/*, put.createmealo*/);
+
 app.get('/mealo', mealo.index);
 app.get('/mealo/:id',get.getMealo,get.getAttendes,get.getRole,mealo.mealo);
 
 app.get('/mealo/:id/failed', mealo.mealo);
-app.get('/mealo/:id/booking',user.isAuthTokenValid, mealo.bookingmealo);
+app.get('/mealo/:id/booking'/*,user.isAuthed*/, mealo.bookingmealo);
 app.get('/mealo/:id/booked', mealo.bookedmealo);
 app.get('/:city/mealo/new', mealo.createmealo);
 app.post('/:city/mealo/new', mealo.createmealopost);
@@ -214,6 +207,10 @@ app.get('/get/:id', get.one);
 app.get('/get/restaurant/:id', get.restaurant);
 app.get('/get/restaurant/:id/menu', get.restaurantMenu);
 app.get('/get/restaurant/:id/menu/:type', get.restaurantMenuType);
+app.get('/get/restaurants/menu', get.allRestaurantMenu);
+app.get('/get/restaurants/menu/:type', get.allRestaurantMenuType);
+
+app.get('/get/search/:search', get.searchmealo);
 
 app.get('/get/mealo/:id', get.mealo);
 app.get('/get/mealo/attendes/:id', get.attendes);
@@ -228,6 +225,7 @@ app.get('/get/:city/menu/:type', get.cityMenuType);
 
 var fs = require('fs');
 //FIX ME: need a seperate function
+
 
 app.get('/:city/restaurants', function(req, res1) {
     var url = 'http://localhost:3000/get/'+req.params.city+'/restaurants';
@@ -251,15 +249,6 @@ app.get('/:token/session', function(req, res1) {
     res1.end()
    
 });
-
-app.get('/:token/session', function(req, res1) {
-
-	req.session.auth_token=req.params.auth_token;
-    res1.send("OK")
-    res1.end()
-   
-});
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

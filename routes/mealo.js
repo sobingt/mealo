@@ -1,23 +1,45 @@
 var http = require('http')
-    , put = require('../routes/put.js');
+    , put = require('../routes/put.js')
+    ,crypto = require('crypto')
+    ,request = require('request');
 
 exports.index = function(req, res){
   res.render('mealo', { title: 'Express' });
 };
 
 exports.mealo = function(req,res1) {
-				console.log("inside main mealo");
-            //console.log(res1.response1);
-            //console.log(res1.response2);
             res1.render('singlemealo', {restdata1:res1.response1,restdata2:res1.response2,url : req.url});
 
 
 };
 
 exports.bookingmealo = function(req, res) {
-    console.log("The");
-    res.writeHead(301,{Location: '/mealo/'+req.params.id+'/booked'});
-    res.end();
+    console.log("the  problem");
+    request.post('https://test.payu.in/_payment',
+    { 
+        form: {
+            key:'C0Dr8m',
+            txnid:100000011111,
+            amount:1000,
+            productinfo:'dsadasdsad',
+            firstname:'Sobin',
+            email:'sobingt@gmail.com',
+            phone:9969569927,
+            surl:'http://localhost:3000/user/103#',
+            furl:'http://localhost:3000/user/103#',
+            hash:'38220cf82847b710c4e454e5ba5e73dd78e5207ee90807fc6413205b9b9f454aa0c3b682574b62ab0e89c2e522e71b424b0afa7b1e99ba4191a1afad 82baa397',
+            offer_key:123,
+            api_version:2
+            }
+    },
+    function (error, response, body) {
+                console.log(response.request.response.headers.location);
+                console.log(response);
+                res.writeHead(301,{Location: response.request.response.headers.location});
+                res.end();
+    });
+
+
 };
 
 exports.bookedmealo = function(req, res1) {

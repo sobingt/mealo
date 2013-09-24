@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Mealo</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="">
+
+    <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,200,300' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
+    <link href="css/resp.css" rel="stylesheet">
+    <link href="css/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="css/colorbox.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="favicon.html" />
+    <link rel="apple-touch-icon" href="img/touch-icon.html" />
+    <link rel="image_src" href="img/touch-icon.html" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--[if IE 8]>
+    <style type="text/css">
+        input[type="checkbox"], input[type="radio"] {
+            display: inline;
+        }
+        input[type="checkbox"] + label, input[type="radio"] + label{
+            display: inline;
+            background: none;
+            margin-bottom: 15px;
+        }
+        .zone {
+            background-color: #727272;
+            filter: alpha(Opacity=70);
+        }
+        .black {
+            background-color: #727272;
+            filter: alpha(Opacity=70);
+        }
+    </style>
+    <![endif]-->
+
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript">
+    
+$( document ).ready(function() {
+    $('#menu input:radio').addClass('input_hidden');
+    $('#menu label').click(function() {
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
+   
+});
+  
+        /* <![CDATA[ */
+        jQuery(window).scroll(function fade() {
+            if (jQuery(window).scrollTop() > 400) {
+                jQuery("#navtop").css("display", "block");
+            }
+            else {
+                jQuery("#navtop").css("display", "none");
+            }
+        });
+        /* ]]> */
+        var mealoData = [];
+        {{#each restdata}}
+            var mealo = {};
+            mealo['id'] = {{id}};
+            mealo['name'] = "{{name}}";
+            mealo['menuId'] = {{menuId}};
+            mealo['tablesize'] = {{tablesize}};
+            mealo['time'] = new Date("{{time}}");
+            mealo['created'] = new Date("{{created}}");
+            mealo['uid'] = {{uid}};
+            mealo['description'] = "{{description}}";
+            mealo['restId'] = {{restId}};
+            mealo['menu'] = "{{menu}}";
+            mealo['type'] = "{{type}}";
+            mealo['restaurant'] = "{{restaurant}}";
+            mealo['locationId'] = {{locationId}};
+            mealo['email'] = "{{email}}";
+            mealo['phone1'] = "{{phone1}}";
+            mealo['phone2'] = "{{phone2}}";
+            mealo['phone3'] = "{{phone3}}";
+            mealo['cityId'] = {{cityId}};
+            mealo['maxTableSize'] = {{maxTableSize}};
+            mealo['cuisine'] = "{{cuisine}}";
+            mealo['picture'] = "{{picture}}";
+            mealo['note'] = "{{note}}";
+            mealo['latitude'] = {{latitude}};
+            mealo['longitude'] = {{longitude}};
+            mealoData.push(mealo);
+	{{/each}}	
+        
+        for (var i=0; i < mealoData.length; i++) {
+            console.log(mealoData[i]['time']);
+
+        }
+    </script>
+
+</head>
+
+<body>
+
+
+<div class="contentt">
+<div class="container-fluid line">
+
+</div>
+
+<div class="clear"></div>
+
+<div class="content">
+    <div class="row-fluid">
+    <h1 class="decoration text-center about"><span class="nobacgr">Invoice</span></h1>
+
+    <div class="logo inline" style="margin-bottom: 31px; margin-top: 12px;" >
+        <h1 class="inline fleft">Mealo</h1>
+    </div>
+   
+
+
+
+    <section class="invoice-financials">
+            <form class="form-invoice" name="invoice" method="POST" action="#" enctype="multipart/form-data">
+    <input name="transid" type="hidden" value="sss">
+    <input name="amount" type="hidden" value="sss">
+    <input name="productinfo" type="hidden" value="sss">
+    <input name="firstname" type="hidden" value="sss">
+    <input name="uid" type="hidden" value="sss">
+    <input name="hashKey" type="hidden" value="sss">
+    <input name="mobile" type="hidden" value="sss">
+            {{#each data}}
+		<div class="invoice-items">
+			<table>
+				<caption>Invoice Details</caption>
+				<thead>
+					<tr>
+						<th>Key</th>
+						<th>Value</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>Mealo name</th>
+						<td>{{mealoname}}</td>
+					</tr>
+					<tr>
+						<th>Transaction ID</th>
+						<td>{{transid}}</td>
+					</tr>
+					<tr>
+						<th>Mealo Date</th>
+						<td>{{date}}</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2"></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div><!-- e: invoice items -->
+
+
+		<div class="invoice-totals">
+			<table>
+				<caption>Totals:</caption>
+				<tbody>
+					<tr>
+						<th>Total:</th>
+						<td>Rs. {{amount}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div><!-- e: invoice totals -->
+           {{/each}}
+    </form>
+	</section>
+     
+    </div>
+</div>
+
+</div>
+</div>
+
+<div id="footer">
+    <div class="footer_bot">
+        <div class="footer_bott">
+              <div class="fleft">© All Rights Reserved. .</div>
+              <div class="fright">
+                <ul id="social_b" class="socialbott inline">
+                    <li><a href="https://twitter.com/" target="_blank" original-title="twitter"><img src="img/social/icon_footer_face.png" alt=""></a></li>
+                    <li><a href="https://plus.google.com/" target="_blank" original-title="googleplus"><img src="img/social/icon_footer_g.png" alt=""></a></li>
+                    <li><a href="https://www.facebook.com/" title="facebook" target="_blank"><img src="img/social/icon_footer_tw.png" alt=""></a></li>
+
+                </ul>
+              </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.selectbox.min.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-timepicker.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/jquery-uii.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/jquery.colorbox.js"></script>
+<script src="js/jquery.tweet.js"></script>
+<script src="js/jflickrfeed.min.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

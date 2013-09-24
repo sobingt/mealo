@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Mealo</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="">
+
+    <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,200,300' rel='stylesheet' type='text/css'>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
+    <link href="css/resp.css" rel="stylesheet">
+    <link href="css/colorbox.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="favicon.html" />
+    <link rel="apple-touch-icon" href="img/touch-icon.html" />
+    <link rel="image_src" href="img/touch-icon.html" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--[if IE 8]>
+    <style type="text/css">
+        input[type="checkbox"], input[type="radio"] {
+            display: inline;
+        }
+        input[type="checkbox"] + label, input[type="radio"] + label{
+            display: inline;
+            background: none;
+            margin-bottom: 15px;
+        }
+        .zone {
+            background-color: #727272;
+            filter: alpha(Opacity=70);
+        }
+        .black {
+            background-color: #727272;
+            filter: alpha(Opacity=70);
+        }
+    </style>
+    <![endif]-->
+
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript">
+    function getMenu(id) { // This event fires when a button is clicked
+        
+        $.ajax({ // ajax call starts
+          url: '/get/restaurant/'+id+'/menu', // JQuery loads serverside.php
+          dataType: 'json', // Choosing a JSON datatype
+          success: function(data) // Variable data contains the data we get from serverside
+          {
+                var options ='<select name="restaurantmenu" class="">';
+                for (var i = 0; i < data.length; i++) 
+                {
+                     options +=' <option value="'+data[i].id+'">'+data[i].id+'</option>';
+                }
+                options +='</select>';
+               $("#restaurantmenu").html(options);
+          }
+      });
+
+    }
+    
+$( document ).ready(function() {
+    $('#menu input:radio').addClass('input_hidden');
+    $('#menu label').click(function() {
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
+   
+});
+  
+        /* <![CDATA[ */
+        jQuery(window).scroll(function fade() {
+            if (jQuery(window).scrollTop() > 400) {
+                jQuery("#navtop").css("display", "block");
+            }
+            else {
+                jQuery("#navtop").css("display", "none");
+            }
+        });
+        /* ]]> */
+        var mealoData = [];
+        {{#each restdata}}
+            var mealo = {};
+            mealo['id'] = {{id}};
+            mealo['name'] = "{{name}}";
+            mealo['menuId'] = {{menuId}};
+            mealo['tablesize'] = {{tablesize}};
+            mealo['time'] = new Date("{{time}}");
+            mealo['created'] = new Date("{{created}}");
+            mealo['uid'] = {{uid}};
+            mealo['description'] = "{{description}}";
+            mealo['restId'] = {{restId}};
+            mealo['menu'] = "{{menu}}";
+            mealo['type'] = "{{type}}";
+            mealo['restaurant'] = "{{restaurant}}";
+            mealo['locationId'] = {{locationId}};
+            mealo['email'] = "{{email}}";
+            mealo['phone1'] = "{{phone1}}";
+            mealo['phone2'] = "{{phone2}}";
+            mealo['phone3'] = "{{phone3}}";
+            mealo['cityId'] = {{cityId}};
+            mealo['maxTableSize'] = {{maxTableSize}};
+            mealo['cuisine'] = "{{cuisine}}";
+            mealo['picture'] = "{{picture}}";
+            mealo['note'] = "{{note}}";
+            mealo['latitude'] = {{latitude}};
+            mealo['longitude'] = {{longitude}};
+            mealoData.push(mealo);
+	{{/each}}	
+        
+        for (var i=0; i < mealoData.length; i++) {
+            console.log(mealoData[i]['time']);
+
+        }
+    </script>
+
+</head>
+
+<body>
+ {{> header}}
+
+<div class="contentt">
+<div class="container-fluid line">
+
+    <div class="slides">
+ {{> search}}
+
+    </div>
+
+    <div class="top_widgets black">
+        <section class="black">
+            <div class="search-wrapper clearfix">
+                <div class="zone clearfix">
+                <div class="searchr block">
+                <div id="default-search" >
+
+                </div>
+                <div id="advanced-search"  style="display: none;">
+
+                <div class="row-fluid projects font_p" id="top_slide">
+                <div id="myCarousel" class="carousel slide">
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev"></a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next"></a>
+                </div>
+
+                </div>
+
+
+                </div>
+                <div class="advanced-search-control">
+                    <a id="advanced-search-button" class="advanced-search-button fright adv_search latest expanded"></a>
+                </div>
+                </div>
+
+                </div><!-- end of .zone-search -->
+            </div><!-- end of .search-wrapper -->
+
+            <div class="map-wrapper">
+
+                <div id="map-canvas" class="map" style="position: relative; overflow: hidden; -webkit-transform: translateZ(0);height: 465px">
+
+                </div>
+            </div><!-- end of .map-wrapper -->
+            
+
+        </section>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+<div class="content">
+<h1 class="decoration text-center proj"><span class="nobacgr">Search</span></h1>
+
+    <section class="section content" id="mealo-list">
+
+        <div class="wrapper row-fluid projects font_p" id="contentWrapper">
+            <div class="zone-content clearfix">
+
+                <div class="">
+<!--
+                    <div class="mealo-selection block">
+                        <div class="decoration text-center" data-toggle="buttons-radio">
+                            <div class="inline nobacgr">
+                                <div class="text-center tags">
+                                    <ul id="mealo-filter">
+                                        <li><input class="btn" id="all" type="button" value="All" class="button-2-green current" title=""> </li>
+                                        <li><input class="btn" id="creative" type="button" value="Creative" class="button-2-green" title=""> </li>
+                                        <li><input class="btn" id="developments" type="button" value="Developments" class="button-2-green" title=""> </li>
+                                        <li><input class="btn" id="fashion" type="button" value="Fashion" class="button-2-green" title="">  </li>
+                                        <li><input class="btn" id="identity" type="button" value="Identity" class="button-2-green" title="">  </li>
+                                        <li><input class="btn" id="movies" type="button" value="Movies" class="button-2-green" title="">  </li>
+                                        <li><input class="btn" id="other" type="button" value="Other" class="button-2-green" title="">   </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+-->
+                </div>
+                {{#each mealos}}
+                <div class="mealo-container">
+                {{#moduloIf @index 3}}
+                </div>
+                <div class="mealo-container">
+                {{/moduloIf}}
+                    <div class="mealo-listing development other developments identity block" style="display: block;">
+                        <div class="span4 bordered">
+                            <div class="folder"><h4 class="text-center title"><a href="/mealo/{{id}}">{{name}}</a></h4></div>
+                            <div class="proj_name">
+                                <div class="clear"></div>
+                                <span onclick="javascript:location.href='/restaurant/{{id}}'" class="fleft author">{{restaurant}}</span>
+                                <table class="icons">
+                                    <tbody>
+                                    <tr>
+                                        <td class="icos_proj_sm bleft"><a href="projects.html#proj{{id}}"><img src="img/icon_lock.png" alt=""></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="folder border"><a href="projects.html#proj{{id}}"><div class="author_proj proj_{{id}}" style="background: url({{picture}}) no-repeat; background-size: 100%;"></div></a></div>
+                            <div class="folder lorem lines">
+                                <div id="project{{id}}" value="{{tablesize}}" class="slider"></div>
+                            </div>
+                            <p class="descr">{{description}}</p>
+                            <div class="folder price topbordered">
+                                <div class="span4">
+                                    <strong class="green"><span></span><span class="project_value" href="#project{{id}}">{{attend}}</span></strong>
+                                    <p>seats left </p>
+                                </div>
+                                <div class="span4 bleft">
+                                    <strong id="mealo_date_{{id}}"></strong>
+                                    <p id="mealo_month_{{id}}"></p>
+                                </div>
+                                <div class="span4 bleft">
+                                    <strong id="mealo_time_{{id}}">25</strong>
+                                    <p> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+      
+
+                {{/each}}
+            </div><!-- end of .zone-content -->
+        </div><!-- end of .content-wrapper -->
+
+    </section>
+
+<div class="btns">
+    <div class="btn-toolbar text-center">
+        <div class="decoration text-center proj">
+                    <div class="btn-group nobacgr">
+                        <button class="btn"><span class="gray">1</span></button>
+                        <button class="btn mleft10">2</button>
+                        <button class="btn mleft10">3</button>
+                        <button class="btn mleft10">4</button>
+                        <button class="btn mleft10">5</button>
+                    </div>
+                    <a name="id_reg" id="registr"></a>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+<a name="id_partn"></a>
+
+</div>
+</div>
+
+<div id="footer">
+    <div class="footer_bot">
+        <div class="footer_bott">
+              <div class="fleft">© All Rights Reserved. .</div>
+              <div class="fright">
+                <ul id="social_b" class="socialbott inline">
+                    <li><a href="https://twitter.com/" target="_blank" original-title="twitter"><img src="img/social/icon_footer_face.png" alt=""></a></li>
+                    <li><a href="https://plus.google.com/" target="_blank" original-title="googleplus"><img src="img/social/icon_footer_g.png" alt=""></a></li>
+                    <li><a href="https://www.facebook.com/" title="facebook" target="_blank"><img src="img/social/icon_footer_tw.png" alt=""></a></li>
+
+                </ul>
+              </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+    
+
+    <script>
+        /* <![CDATA[ */
+        (function($) {
+            jQuery(function() {
+
+                $('select').selectbox();
+
+                jQuery('#add').click(function(e) {
+                    jQuery(this).parents('div.section').append('<br /><br /><select><option>-- Выберите --</option><option>Пункт 1</option><option>Пункт 2</option><option>Пункт 3</option><option>Пункт 4</option><option>Пункт 5</option></select>');
+                    jQuery('select').selectbox();
+                    e.preventDefault();
+                })
+
+                jQuery('#add2').click(function(e) {
+                    var options = '';
+                    for (i = 1; i <= 5; i++) {
+                        options += '<option>Option ' + i + '</option>';
+                    }
+                    jQuery(this).parents('div.section').find('select').each(function() {
+                        jQuery(this).append(options);
+                    })
+                    jQuery('select').trigger('refresh');
+                    e.preventDefault();
+                })
+
+                jQuery('#che').click(function(e) {
+                    jQuery(this).parents('div.section').find('option:nth-child(5)').attr('selected', true);
+                    jQuery('select').trigger('refresh');
+                    e.preventDefault();
+                })
+
+            })
+        })(jQuery)
+        /* ]]> */
+
+    </script>
+    <script>
+        /* <![CDATA[ */
+        jQuery(document).ready(function(){
+            jQuery("#toggl").click(function(){
+                jQuery("#panel").slideToggle("slow");
+                jQuery("#home-page-featured").slideToggle("slow");
+                jQuery(this).toggleClass('latest_top');
+            });
+        });
+        /* ]]> */
+        </script>
+<script>
+    /* <![CDATA[ */
+    jQuery('#advanced-search').hide();
+    jQuery('#advanced-search-button').click(function(event) {
+        /* Preventing default link action */
+        event.preventDefault();
+        jQuery('#default-search').slideToggle('fast');
+        jQuery('#advanced-search').slideToggle('fast');
+        jQuery(this).toggleClass('expanded');
+    });
+    /* ]]> */
+
+</script>
+<script>
+    /* <![CDATA[ */
+    jQuery(function() {
+
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
+        jQuery( "#autocomplete" ).autocomplete({
+            source: availableTags
+        });
+
+        // Hover states on the static widgets
+        jQuery( "#dialog-link, #icons li" ).hover(
+                function() {
+                    jQuery( this ).addClass( "ui-state-hover" );
+                },
+                function() {
+                    jQuery( this ).removeClass( "ui-state-hover" );
+                }
+        );
+    });
+    /* ]]> */
+
+</script>
+<script>
+    /* <![CDATA[ */
+    function scrollToAnchor(aid){
+        var aTag = jQuery("a[name='"+ aid +"']");
+        jQuery('html,body').animate({scrollTop: aTag.offset().top},'slow');
+    }
+    jQuery("#link").click(function() {
+        scrollToAnchor('id3');
+    });
+    jQuery("#link_about").click(function() {
+        scrollToAnchor('id_about');
+    });
+    jQuery("#link_reg").click(function() {
+        scrollToAnchor('id_reg');
+    });
+    jQuery("#link_contact").click(function() {
+        scrollToAnchor('id_cont');
+    });
+    jQuery("#link_home").click(function() {
+        scrollToAnchor('id_home');
+    });
+    jQuery("#link_partners").click(function() {
+        scrollToAnchor('id_partn');
+    });
+    jQuery("#link_b").click(function() {
+        scrollToAnchor('id3');
+    });
+    jQuery("#link_about_b").click(function() {
+        scrollToAnchor('id_about');
+    });
+    jQuery("#link_reg_b").click(function() {
+        scrollToAnchor('id_reg');
+    });
+    jQuery("#link_contact_b").click(function() {
+        scrollToAnchor('id_cont');
+    });
+    jQuery("#link_partners_b").click(function() {
+        scrollToAnchor('id_partn');
+    });
+    /* ]]> */
+
+
+</script>
+<script>
+    /* <![CDATA[ */
+    function hexFromRGB(r, g, b) {
+        var hex = [
+            r.toString( 16 ),
+            g.toString( 16 ),
+            b.toString( 16 )
+        ];
+        $.each( hex, function( nr, val ) {
+            if ( val.length === 1 ) {
+                hex[ nr ] = "0" + val;
+            }
+        });
+        return hex.join( "" ).toUpperCase();
+    }
+    function refreshSwatch() {
+        var red = jQuery( "#project1" ).slider( "value" ),
+                green = jQuery( "#project2" ).slider( "value" ),
+                blue = jQuery( "#project3" ).slider( "value" ),
+                blues = jQuery( "#project4" ).slider( "value" ),
+                hex = hexFromRGB( red, green, blue);
+        jQuery( "#swatch" ).css( "background-color", "#" + hex );
+
+    }
+    jQuery(function() {
+        jQuery( "#project1, #project2, #project3, #project4, #project5, #project6, #project7, #project8, #project9, #project10, #project11, #project12" ).slider({
+            orientation: "horizontal",
+            range: "min",
+            disabled: true,
+            max: 100,
+            slide: refreshSwatch,
+            change: refreshSwatch
+        });
+
+        $.each(jQuery('.project_value'), function(k,v){
+            var value = 100 * Number(jQuery(v).text())/Number(jQuery(jQuery(v).attr('href')).attr('value'));
+            value = Math.floor(value);
+            jQuery(jQuery(v).attr('href')).slider("value", value);
+            jQuery(jQuery(v).attr('href')).find(".ui-slider-handle").text(value+'%');
+        });
+
+    });
+    /* ]]> */
+
+</script>
+
+<script src="js/jquery.selectbox.min.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-uii.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="js/contact.js"></script>
+<script src="js/jquery.colorbox.js"></script>
+<script src="js/jquery.placeholder.js"></script>
+<script src="js/jquery.tweet.js"></script>
+<script src="js/jflickrfeed.min.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/main.js"></script>
+
+<!--[if IE 8]>
+<script src="js/css3-mediaqueries.js"></script>
+<![endif]-->
+<script>
+    /* <![CDATA[ */
+    jQuery(document).ready(function(){
+        var slider = jQuery(".slider").slider({
+            change: function () {
+/*                var value = jQuery(this).slider("option", "value");
+                jQuery(this).find(".ui-slider-handle").text(value+'%');*/
+            },
+            slide: function () {
+/*                var value = jQuery(this).slider("option", "value");
+                jQuery(this).find(".ui-slider-handle").text(value+"%");*/
+            }
+        });
+/*        slider.each(function(index){
+            var el = slider.get(index);
+            var value = jQuery(el).slider("value");
+            jQuery(el).slider("value", value);
+        });*/
+    });
+    /* ]]> */
+</script>
+<script>
+    /* <![CDATA[ */
+    jQuery(document).ready(function(){
+        //Examples of how to assign the Colorbox event to elements
+        jQuery(".group1").colorbox({rel:'nofollow',scalePhotos:'false'});
+
+    });
+    /* ]]> */
+
+</script>
+<script>
+    /* <![CDATA[ */
+    jQuery(function() {
+        jQuery('input, textarea').placeholder();
+    });
+    /* ]]> */
+
+</script>
+<script>
+    /* <![CDATA[ */
+    jQuery(function(){
+        // bind change event to select
+        jQuery('#dynamic_select').bind('change', function () {
+            var url = jQuery(this).val(); // get selected value
+            if (url) { // require a URL
+                window.location = url; // redirect
+            }
+            return false;
+        });
+    });
+                {{#each mealos}}
+                var time_{{id}} = new Date("{{time}}");
+                var i_{{id}} = time_{{id}}.getDate();
+                var month=new Array();
+                var hours_{{id}} = time_{{id}}.getHours();
+                var minutes_{{id}} = time_{{id}}.getMinutes();
+                var ampm_{{id}} = hours_{{id}} >= 12 ? 'pm' : 'am';
+                hours_{{id}} = hours_{{id}} % 12;
+                hours_{{id}} = hours_{{id}} ? hours_{{id}} : 12; // the hour '0' should be '12'
+                minutes_{{id}} = minutes_{{id}} < 10 ? '0'+minutes_{{id}} : minutes_{{id}};
+                var strTime_{{id}} = hours_{{id}} + ':' + minutes_{{id}} + ' ' + ampm_{{id}};
+
+                var maxseat_{{id}} ={{tablesize}};
+                var seat_{{id}} ={{attend}};
+                var left_{{id}} = maxseat_{{id}} - seat_{{id}};
+                month[0]="January";
+                month[1]="February";
+                month[2]="March";
+                month[3]="April";
+                month[4]="May";
+                month[5]="June";
+                month[6]="July";
+                month[7]="August";
+                month[8]="September";
+                month[9]="October";
+                month[10]="November";
+                month[11]="December";
+                var m_{{id}} = time_{{id}}.getMonth();
+                var j_{{id}} = i_{{id}} % 10;
+                if (j_{{id}} == 1 && i_{{id}} != 11) {
+                    i_{{id}} = i_{{id}} + "st";
+                }
+                else if (j_{{id}} == 2 && i_{{id}} != 12) {
+                    i_{{id}} = i_{{id}} + "nd";
+                }
+                else if (j_{{id}} == 3 && i_{{id}} != 13) {
+                    i_{{id}} = i_{{id}} + "rd";
+                }
+                else
+                    i_{{id}} = i_{{id}} + "th";
+               
+                $("#mealo_date_{{id}}").html( i_{{id}});
+                $("#mealo_month_{{id}}").html(month[m_{{id}}]);
+                $("#mealo_time_{{id}}").html(strTime_{{id}});
+
+                {{/each}}
+
+    
+    /* ]]> */
+</script>
+<script>
+			{{#each mealos}}
+            if({{@index}} == 0)
+            {
+             var firstplace = new google.maps.LatLng({{latitude}}, {{longitude}});
+            }
+		var latLong_{{id}} = new google.maps.LatLng({{latitude}}, {{longitude}});
+        var marker_{{id}};
+        {{/each }}
+        
+		function initialize() {
+								var mapOptions = {
+													zoom: 15,
+													center: firstplace,
+													mapTypeId: google.maps.MapTypeId.ROADMAP
+												 }
+								var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+								{{#each mealos}}
+                                marker_{{id}}=new google.maps.Marker({
+														map: map,
+														draggable: true,
+                                                        animation: google.maps.Animation.DROP,
+														position:latLong_{{id}}
+														});
+                                                         google.maps.event.addListener(marker_{{id}}, 'click', toggleBounce);
+                                                         
+                                {{/each }}
+							  }
+                              
+                              function toggleBounce() {
+
+  if (marker.getAnimation() != null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
+	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+
+</body>
+</html>

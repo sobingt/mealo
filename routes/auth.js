@@ -1,7 +1,12 @@
-var mysql = require('mysql');
-var crypto = require('crypto');
-var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root', database: 'mealo'});
+var  mysql = require('mysql')
+    , config = require('../config')
+    , crypto = require('crypto');
+    
+var connection = mysql.createConnection({ 
+                    host: config.database.host,
+                    user: config.database.user, 
+                    password: config.database.password, 
+                    database: config.database.database});
 
 exports.login = function(req, res){
 

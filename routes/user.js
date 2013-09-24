@@ -1,16 +1,19 @@
-var mysql = require('mysql');
-var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root1234', database: 'mealo'});
-/*
- * GET users listing.
- */
 var crypto = require('crypto')
     , http = require('http')
     , request = require('request')
-	,email=require('./email.js')
-	,config=require('../config.js');
-	
-    
+	, email=require('./email.js')
+    , mysql = require('mysql')
+	, config=require('../config.js');
+
+var connection = mysql.createConnection({ 
+                    host: config.database.host,
+                    user: config.database.user, 
+                    password: config.database.password, 
+                    database: config.database.database});
+
+/*
+ * GET users listing.
+ */
 exports.list = function(req, res){
   res.send("respond with a resource");
 };
@@ -171,6 +174,8 @@ exports.auth = function(req, res, next){
             res.render('login', {error: error});
         }
     }
+    
+    
 );
 	 
     
@@ -215,7 +220,7 @@ exports.requestForAuthToken = function(req,res){
     if (connection) {
     
         var queryString = 'INSERT INTO token (id, uid, auth_token, time) VALUES (NULL, ?, ?,5259480)'
-        connection.query(queryString, [res.uid,auth_token], function(err, rows, fields) {
+        connection.query(queryString, [req.uid,auth_token], function(err, rows, fields) {
             if (err) throw err;
             else
             {
@@ -233,6 +238,7 @@ exports.requestForAuthToken = function(req,res){
 
 exports.isAuthTokenValid = function(req,res,next)
 {
+    console.log(req.url);
     if (connection) {
         var queryString = 'SELECT * FROM token where auth_token = ?';
         connection.query(queryString, [req.session.auth_token], function(err, rows, fields) {
@@ -247,7 +253,37 @@ exports.isAuthTokenValid = function(req,res,next)
                 res.end();
             }
         });
-    }
-
-
+        }
 };
+
+exports.isAuthed = function(req,res,next)
+{
+    console.log(req.url);
+    if(typeof req.session.auth_token !== "undefined")
+    {
+        if (connection) 
+        {
+            var queryString = 'SELECT * FROM token where auth_token = ?';
+            connection.query(queryString, [req.session.auth_token], function(err, rows, fields) {
+                if (err) throw err;
+                if(rows.length <= 0)
+                {
+                    console.log("not Token "+req.session.auth_token);
+                    //res.writeHead(301,{Location: '/login'});
+                    res.end();
+                }
+                else
+                {
+                     next();
+                }
+            });
+        }
+    }
+    else
+    {
+        console.log("not Token dude "+req.session.auth_token);
+        //res.writeHead(301,{Location: '/login'});
+        res.end();
+    }
+};
+

@@ -1,7 +1,12 @@
-var mysql = require('mysql');
+var  mysql = require('mysql')
+    , config = require('../config');
+    
+var connection = mysql.createConnection({ 
+                    host: config.database.host,
+                    user: config.database.user, 
+                    password: config.database.password, 
+                    database: config.database.database});
 
-var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root', database: 'mealo'});
 
 exports.all = function(req, res){
     if (connection) {

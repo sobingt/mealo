@@ -1264,7 +1264,7 @@ img{ max-width: 100%; }
         font-size: 12px;
         margin: 0 !important;
     }
-    #portfolio-list .span3 {
+    #mealo-list .span3 {
         width: 31.5%;
         margin-left: 1.5%;
         margin-top: 1.5%;
@@ -1444,7 +1444,7 @@ img{ max-width: 100%; }
         padding: 10px;
     }
 
-    #portfolio-list .span4 {
+    #mealo-list .span4 {
         width: 100%;
         margin-bottom: 1.5%;
         margin-left: 0;
@@ -1454,7 +1454,7 @@ img{ max-width: 100%; }
         margin-left: -126px;
         margin-top: -13px;
     }
-    #portfolio-list .span6 {
+    #mealo-list .span6 {
         width: 100%;
         margin-left: 0;
         margin-top: 2.5%;
@@ -1462,7 +1462,7 @@ img{ max-width: 100%; }
     .price2column .span4 {
         border-bottom: 1px solid #e7e7e7;
     }
-    #portfolio-list .span3 {
+    #mealo-list .span3 {
         width: 48.5%;
         margin-left: 1.5%;
         margin-top: 1.5%;
@@ -1621,7 +1621,7 @@ img{ max-width: 100%; }
 
     }
 
-    #portfolio-list .span4 {
+    #mealo-list .span4 {
         width: 100%;
         margin-bottom: 1.5%;
         margin-left: 0;
@@ -1632,7 +1632,7 @@ img{ max-width: 100%; }
         margin-left: -106px;
         margin-top: -13px;
     }
-    #portfolio-list .span6 {
+    #mealo-list .span6 {
         width: 100%;
         margin-left: 0;
         margin-top: 2.5%;
@@ -1641,7 +1641,7 @@ img{ max-width: 100%; }
         border-bottom: 1px solid #e7e7e7;
     }
 
-    #portfolio-list .span3 {
+    #mealo-list .span3 {
         width: 48.5%;
         margin-left: 1.5%;
         margin-top: 1.5%;
@@ -1959,7 +1959,7 @@ img{ max-width: 100%; }
         text-align: center;
     }
 
-    #portfolio-list .span4 {
+    #mealo-list .span4 {
         width: 100%;
         margin-bottom: 1.5%;
         margin-left: 0;
@@ -1975,7 +1975,7 @@ img{ max-width: 100%; }
        #header .titul {
            background-color: #fff;
        }
-    #portfolio-list .span6 {
+    #mealo-list .span6 {
         width: 100%;
         margin-left: 0;
         margin-top: 2.5%;
@@ -1984,7 +1984,7 @@ img{ max-width: 100%; }
         border-bottom: 1px solid #e7e7e7;
     }
 
-    #portfolio-list .span3 {
+    #mealo-list .span3 {
         width: 100%;
         margin-left: 0;
         margin-top: 1.5%;

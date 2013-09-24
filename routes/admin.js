@@ -1,8 +1,16 @@
-var mysql = require('mysql')
-  , http = require('http')
-  , connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root', database: 'mealo'})
-  , get = require('./get');
+var http = require('http');
+var  mysql = require('mysql')
+    , config = require('../config')
+    , crypto = require('crypto')
+    , get = require('./get');
+    
+var connection = mysql.createConnection({ 
+                    host: config.database.host,
+                    user: config.database.user, 
+                    password: config.database.password, 
+                    database: config.database.database});
+
+ 
 
 exports.isAdmin = function(req, res, next) {
   var auth_token = req.session.auth_token;

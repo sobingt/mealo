@@ -1,8 +1,12 @@
-var mysql = require('mysql');
 var http = require('http');
-
-var connection = mysql.createConnection({ host: 'localhost', user: 'root',  
-                                          password: 'root1234', database: 'mealo'});
+var  mysql = require('mysql')
+    , config = require('../config');
+    
+var connection = mysql.createConnection({ 
+                    host: config.database.host,
+                    user: config.database.user, 
+                    password: config.database.password, 
+                    database: config.database.database});
 
 //FIX IT .....MAKE IT ALL POSTS OR FUNCTIONS
 										  
@@ -24,6 +28,7 @@ exports.one = function(req, res){
         connection.query(queryString, [id], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
+            console.log(rows);
             res.write(JSON.stringify(rows));
             res.end();
         });
@@ -50,7 +55,8 @@ exports.restaurantMenu = function(req, res){
         connection.query(queryString, [id], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
-            
+            for(var i=0;i<rows.length;i++)
+                rows[i].cost=JSON.parse(rows[i].cost);
             res.write(JSON.stringify(rows));
             res.end();
         });
@@ -65,11 +71,44 @@ exports.restaurantMenuType = function(req, res){
         connection.query(queryString, [id, type], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
+            for(var i=0;i<rows.length;i++)
+                rows[i].cost=JSON.parse(rows[i].cost);
             res.write(JSON.stringify(rows));
             res.end();
         });
     }
 };
+
+
+exports.allRestaurantMenu = function(req, res){
+    if (connection) {
+        var queryString = 'SELECT m.id, m.name, m.restId, m.menu, m.type, m.cost, r.name AS restName, r.description, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, r.address, r.place  FROM menu m, restaurant r WHERE restaurant.id =  menu.restId';
+        connection.query(queryString, function(err, rows, fields) {
+            if (err) throw err;
+            res.contentType('application/json');
+            for(var i=0;i<rows.length;i++)
+                rows[i].cost=JSON.parse(rows[i].cost);
+            res.write(JSON.stringify(rows));
+            res.end();
+        });
+    }
+};
+
+exports.allRestaurantMenuType = function(req, res){
+    var type = req.params.type;
+    if (connection) {
+        var queryString = 'SELECT m.id, m.name, m.restId, m.menu, m.type, m.cost, r.name AS restName, r.description, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, r.address, r.place  FROM menu m, restaurant r WHERE r.id =  m.restId AND type = ?';
+        connection.query(queryString, [type], function(err, rows, fields) {
+            if (err) throw err;
+            res.contentType('application/json');
+            for(var i=0;i<rows.length;i++)
+                rows[i].cost=JSON.parse(rows[i].cost);
+            res.write(JSON.stringify(rows));
+            res.end();
+        });
+    }
+};
+
 
 exports.mealo = function(req, res){
     var id = req.params.id;
@@ -107,8 +146,35 @@ exports.allmealos = function(req, res){
         connection.query(queryString, function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
+            for(var i=0;i<rows.length;i++)
+            {
+                rows[i].phone=JSON.parse(rows[i].phone);
+                rows[i].cost= JSON.parse(rows[i].cost);
+            }
             res.write(JSON.stringify(rows));
-            console.log(rows);
+            res.end();
+        });
+        
+    }
+};
+
+exports.searchmealo = function(req, res){
+    var search = req.params.search+"%";
+    console.log(search+" Serach");
+    if (connection) {
+        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid WHERE mealo.name LIKE ? OR mealo.description LIKE ? OR r.cuisine LIKE ?';
+        console.log(queryString,[search,search,search]);
+        //res.write(queryString);
+        connection.query(queryString,[search,search,search], function(err, rows, fields) {
+            if (err) throw err;
+            res.contentType('application/json');
+            for(var i=0;i<rows.length;i++)
+            {
+                rows[i].phone=JSON.parse(rows[i].phone);
+                rows[i].cost= JSON.parse(rows[i].cost);
+            }
+            res.write(JSON.stringify(rows));
+            console.log(JSON.stringify(rows));
             res.end();
         });
         
@@ -157,8 +223,8 @@ exports.cityRestaurants = function(req, res){
         connection.query(queryString, [city,city], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
-            console.log("The Row");
-            console.log(JSON.stringify(rows));
+            for(var i=0;i<rows.length;i++)
+                rows[i].phone=JSON.parse(rows[i].phone);
             res.write(JSON.stringify(rows));
             res.end();
         });
@@ -204,6 +270,8 @@ exports.cityMenuType = function(req, res){
         connection.query(queryString, [city, type], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
+            for(var i=0;i<rows.length;i++)
+                rows[i].cost=JSON.parse(rows[i].cost);
             res.write(JSON.stringify(rows));
             res.end();
         });

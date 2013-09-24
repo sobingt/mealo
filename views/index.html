@@ -15,6 +15,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/jquery-ui.css" rel="stylesheet">
     <link href="css/resp.css" rel="stylesheet">
+    <link href="css/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="css/colorbox.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="favicon.html" />
@@ -49,24 +50,6 @@
 
     <script src="js/jquery.js"></script>
     <script type="text/javascript">
-    function getMenu(id) { // This event fires when a button is clicked
-        
-        $.ajax({ // ajax call starts
-          url: '/get/restaurant/'+id+'/menu', // JQuery loads serverside.php
-          dataType: 'json', // Choosing a JSON datatype
-          success: function(data) // Variable data contains the data we get from serverside
-          {
-                var options ='<select name="restaurantmenu" class="">';
-                for (var i = 0; i < data.length; i++) 
-                {
-                     options +=' <option value="'+data[i].id+'">'+data[i].id+'</option>';
-                }
-                options +='</select>';
-               $("#restaurantmenu").html(options);
-          }
-      });
-
-    }
     
 $( document ).ready(function() {
     $('#menu input:radio').addClass('input_hidden');
@@ -125,81 +108,13 @@ $( document ).ready(function() {
 </head>
 
 <body>
-<div id="header" class="header">
-    <a name="id_home"></a>
-        <div class="width titul">
-            <div class="reg inline">
-<a href="#loginform" role="button" class="btn" data-toggle="modal">Login</a>{{headPartial}}
-            </div>
-
-            <div class="social inline fright">
-                <ul id="social">
-                <li class="bleft inline">
-                    <ul style="margin-left: 10px">
-                        <li><a href="https://www.facebook.com/" target="_blank"  original-title="twitter"><img src="img/social/icon_header_face.png" alt=""></a></li>
-                        <li><a href="https://plus.google.com/" target="_blank"  original-title="googleplus"><img src="img/social/icon_header_g.png" alt=""></a></li>
-                        <li><a href="https://twitter.com/" title="facebook" target="_blank" ><img src="img/social/icon_header_tw.png" alt=""></a></li>
-                       
-                    </ul>
-                </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="clear"></div>
-        <div class="navigate">
-            <div class="width">
-                <div class="logo inline">
-                    <h1 class="inline fleft">Mealo</h1>
-                </div>
-
-                <div class="navigation inline">
-                    <ul class="nav inline menuleft">
-                        <li class="active"><a class="bleft" href="../">HOME</a></li>
-                        <li><a id="link_about" class="bleft" href="#">ABOUT</a></li>
-                        <li><a id="link" class="bleft" href="#">MEALOS</a></li>
-                        <li><a id="link_reg" class="bleft" href="#">REGISTER</a></li>
-                        <li><a id="link_partners" class="bleft last" href="#">RESTAURANT</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="clear"></div>
-            <div id="header_select">
-                <select id="dynamic_select">
-                    <option value="" selected>Select A Page</option>
-                    <option value="../#id_about">About</option>
-                    <option value="../#id3">Mealos</option>
-                    <option value="../#id_reg">Registration</option>
-                    <option value="../#id_partn">Restaurants</option>
-                </select>
-            </div>
-        </div>
-
-
-    </div>
-<div id="navtop" class="width navigate" style="position: fixed;  display: none; top: 0px; left: 0px;right: 0px;z-index: 99999999999999999;">
-    <div class="navigation">
-        <ul class="nav inline menuleft">
-            <li class="active"><a class="bleft" id="link_home" href="#">HOME</a></li>
-            <li><a id="link_about_b" class="bleft" href="#">ABOUT</a></li>
-            <li><a id="link_b" class="bleft" href="#">MEALOS</a></li>
-            <li><a id="link_reg_b" class="bleft" href="#">REGISTER</a></li>
-            <li><a id="link_partners_b" class="bleft last" href="#">RESTAURANT</a></li>
-        </ul>
-    </div>
-</div>
+ {{> header}}
 
 <div class="contentt">
 <div class="container-fluid line">
 
     <div class="slides">
-            <div class="search_top">
-                <div class="search" id="searchh">
-                    <span class="white"><strong>Find your mealo:</strong></span>
-                    <input id="autocomplete" title="" type="text" class="span7 search-query">
-                    <input type="submit" class="submit" value="search" name="submit">
-                </div>
-            </div>
+ {{> search}}
     </div>
 
     <div class="top_widgets black">
@@ -340,125 +255,52 @@ $( document ).ready(function() {
 
         <div class="wrapper row-fluid projects font_p" id="contentWrapper">
             <div class="zone-content clearfix">
-
-                <div class="">
-<!--
-                    <div class="mealo-selection block">
-                        <div class="decoration text-center" data-toggle="buttons-radio">
-                            <div class="inline nobacgr">
-                                <div class="text-center tags">
-                                    <ul id="mealo-filter">
-                                        <li><input class="btn" id="all" type="button" value="All" class="button-2-green current" title=""> </li>
-                                        <li><input class="btn" id="creative" type="button" value="Creative" class="button-2-green" title=""> </li>
-                                        <li><input class="btn" id="developments" type="button" value="Developments" class="button-2-green" title=""> </li>
-                                        <li><input class="btn" id="fashion" type="button" value="Fashion" class="button-2-green" title="">  </li>
-                                        <li><input class="btn" id="identity" type="button" value="Identity" class="button-2-green" title="">  </li>
-                                        <li><input class="btn" id="movies" type="button" value="Movies" class="button-2-green" title="">  </li>
-                                        <li><input class="btn" id="other" type="button" value="Other" class="button-2-green" title="">   </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
--->
-                </div>
-
                 <div class="mealo-container">
-                {{#each restdata}}
+                {{#each mealos}}
                 {{#moduloIf @index 3}}
                 </div>
                 <div class="mealo-container">
-                {{restdata.length}}
                 {{/moduloIf}}
-                <script>
-                var time = new Date("{{time}}");
-                var i = time.getDate();
-                var month=new Array();
-                var hours = time.getHours();
-                var minutes = time.getMinutes();
-                var ampm = hours >= 12 ? 'pm' : 'am';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // the hour '0' should be '12'
-                minutes = minutes < 10 ? '0'+minutes : minutes;
-                var strTime = hours + ':' + minutes + ' ' + ampm;
-
-                var maxseat ={{tablesize}};
-                var seat ={{attend}};
-                var left = maxseat - seat;
-                month[0]="January";
-                month[1]="February";
-                month[2]="March";
-                month[3]="April";
-                month[4]="May";
-                month[5]="June";
-                month[6]="July";
-                month[7]="August";
-                month[8]="September";
-                month[9]="October";
-                month[10]="November";
-                month[11]="December";
-                var m = time.getMonth();
-                var j = i % 10;
-                if (j == 1 && i != 11) {
-                    i = i + "st";
-                }
-                else if (j == 2 && i != 12) {
-                    i = i + "nd";
-                }
-                else if (j == 3 && i != 13) {
-                    i = i + "rd";
-                }
-                else
-                    i = i + "th";
-               
-                </script>
-                 <div class="mealo-listing {{cuisine}} block" style="display: block;">
+                <div class="mealo-listing development other developments identity block" style="display: block;">
                         <div class="span4 bordered">
                             <div class="folder"><h4 class="text-center title"><a href="/mealo/{{id}}">{{name}}</a></h4></div>
                             <div class="proj_name">
                                 <div class="clear"></div>
-                                <span class="fleft author"><a href="/restaurant/{{restId}}">{{restaurant}}</a></span>
+                                <span onclick="javascript:location.href='/restaurant/{{id}}'" class="fleft author">{{restaurant}}</span>
                                 <table class="icons">
                                     <tbody>
                                     <tr>
-                                        <td class="icos_proj_sm bleft"><a href="projects.html#proj1"><img src="img/icon_lock.png" alt=""></a></td>
+                                        <td class="icos_proj_sm bleft"><a href="projects.html#proj{{id}}"><img src="img/icon_lock.png" alt=""></a></td>
                                     </tr>
                                     </tbody>
-                                 </table>
+                                </table>
                                 <div class="clear"></div>
-                           </div>
-                            <div class="folder border"><a href="projects.html#proj1"><div class="author_proj proj_1" ></div></a></div>
+                            </div>
+                            <div class="folder border"><a href="projects.html#proj{{id}}"><div class="author_proj proj_{{id}}" style="background: url({{picture}}) no-repeat; background-size: 100%;"></div></a></div>
                             <div class="folder lorem lines">
-                                <div id="project{{id}}" value="457" class="slider"></div>
+                                <div id="project{{id}}" value="{{tablesize}}" class="slider"></div>
                             </div>
                             <p class="descr">{{description}}</p>
                             <div class="folder price topbordered">
                                 <div class="span4">
-                                    <strong class="green"><span class="project_value" href="#project1">
-                                    <script>
-                                     document.write(left);
-                                    </script></span></strong>
-                                    <p>seats left</p>
+                                    <strong class="green"><span></span><span class="project_value" href="#project{{id}}">{{attend}}</span></strong>
+                                    <p>seats left </p>
                                 </div>
                                 <div class="span4 bleft">
-                                    <strong>
-                                    <script>
-                                     document.write(i);
-                                    </script>
-                                    </strong>
-                                    <p> <script> document.write(month[m]);
-                                    </script></p>
+                                    <strong id="mealo_date_{{id}}"></strong>
+                                    <p id="mealo_month_{{id}}"></p>
                                 </div>
                                 <div class="span4 bleft">
-                                    <strong><script> document.write(strTime);
-                                    </script></strong>
-                                   
+                                    <strong id="mealo_time_{{id}}">25</strong>
+                                    <p> </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 {{/each}}
                 </div>
+
+                
             </div><!-- end of .zone-content -->
         </div><!-- end of .content-wrapper -->
 
@@ -501,54 +343,82 @@ $( document ).ready(function() {
         <div class="span3 ">
             <div class="column_project">
                 <h4 class="text-center">Basic Details:</h4>
-                <form class="form-search" name="createmealo" method="GET" action="#">
-                    <input type="text" class="inputp search-query span12" placeholder="Name">
-                    <textarea id="redex2" class="inputp search-query span12" rows="9" placeholder="Short description"></textarea>
-                    <input type="date" class="inputp search-query span12" id="arrival_dt" name="arrival_dt" required>
-                    <input type="time" class="inputp search-query span12" id="arrival_time" name="arrival_time" value="23:15:00" step="900" required>
+                <form class="form-search" name="createmealo" method="POST" action="#" enctype="multipart/form-data">
+                    <input type="text" name="name" class="inputp search-query span12" placeholder="Name" required>
+                    <textarea id="redex2" class="inputp search-query span12" name="description" rows="9" placeholder="Short description" required ></textarea>
+                    <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+                      <input name="date" class="inputp datepicker span12" size="16" type="text" value="12-02-2012">
+                      <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                    <div name="time"  class="input-append bootstrap-timepicker search-query span12">
+                        <input id="timepicker1" type="text" onchange="updateRestaurant(this.value)" class="inputp input-small">
+                        <span class="add-on"><i class="icon-time"></i></span>
+                    </div>
             </div>
         </div>
         <div class="span3">
             <div class="bleft column_project">
                 <h4 class="text-center">Select a Restaurant</h4>
-                    <select class="">
-                        <option>Cuisine</option>
-                        <option>Chinese</option>
-                        <option>American</option>
-                        <option>Indian</option>
+                    <select name="cuisine" class="">
+<option>African</option>
+<option>Americas</option>
+<option>Arab</option>
+<option>Asian</option>
+<option>Bengal</option>
+<option>Caribbean</option>
+<option>Central Asian</option>
+<option>European</option>
+<option>Global</option>
+<option>Inuit</option>
+<option>Sami</option>
+<option>Latin American</option>
+<option>Mediterranean</option>
+<option>Middle Eastern</option>
+<option>North African</option>
+<option>South Asian</option>
+<option>West African</option>
+<option>Afghan</option>
+<option>Akan</option>
+<option>Albanian</option>
+<option>Algerian</option>
+<option>American</option>
+<option>Andalusian</option>
+<option>Angolan</option>
+<option>Argentine</option>
+<option>Armenian</option>
+<option>Australian</option>
                     </select>
-                    <select class="" name="restaurant"  onChange="getMenu(this.selectedIndex);">
+                    <select class="" name="restaurant"  id="restaurant"  onChange="getMenu(this.selectedIndex);">
                         <option>Restaurant</option>
-                      {{#each restdata}}
-                      <option value ="value{{id}}">{{restaurant}}</option>
+                      {{#each restaurants}}
+                      <option value ="value{{id}}">{{name}}</option>
                       {{/each}}
                     
                     </select>
-                    <div class="upload_img inline">
-                        <input type="file" name="upload"/>
-                    </div>
-                        <div class="upload_pic1 inline">
-                        <input type="file" name="upload"/>
-                    </div>
-                    <div class="upload_pic2 inline">
-                        <input type="file" name="upload"/>
-                    </div>
-                    <div class="upload_pic3 inline">
-                        <input type="file" name="upload"/>
+                     
+                    
+                    
+                    <div name="file" class="upload_img inline">
+                        <input type="file" name="file"/>
                     </div>
             </div>
         </div>
         <div class="span3">
             <div class="bleft column_project">
-                <h4 class="text-center">Select a Menu:</h4>
-                <div id="restaurantmenu">
+                <h4 id="menutimeinfo" class="text-center">Select a Menu:</h4>
+                <input name="menu" id="menuid" type="hidden" class="inputp search-query span12" placeholder="Menu">
+                <input name="amount" id="amount" type="hidden" class="inputp search-query span12" value="" placeholder="Cost">
+                <div id="restaurantmenu" >
                 </div>
             </div>
         </div>
         <div class="span3">
             <div class="bleft column_project" >
                 <h4 class="text-center "> Agree to Terms:</h4>
-            
+                <input id="maxguest" max="25" min="3" name="maxguest" step="1" type="number" value="3" required> 
+                <label for = "term">max guest you want to invite</label>
+                <input name="term" id="term" type="checkbox" value="Yes" placeholder="I agree" required>
+                <label for = "term">I agree to the Terms and Condition</label>
             </div>
         </div>
     </div>
@@ -594,76 +464,6 @@ $( document ).ready(function() {
     </div>
 </div>
 
-<!-- Modal -->
-<div id="loginform" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h1>Log In</h1>
-  </div>
-  <div class="modal-body">
-   <img src="http://vasil-y.com/wp-content/uploads/2012/10/6291334.gif" style="display: none;" id="imgProgress" style="position: absolute; top: 29%;"/>
-   <div id="loginfrm">
-   <div class="outerbtn">
-    <div class="outerfbbtn">
-        <div class="fbbtn">
-            <div class="innerfbbtn">Log in with Facebook</div>
-        </div>
-    </div>
-    </div>
-    <div class="circle">
-    OR
-    </div>
-   <form method="POST" action="javascript:;" id="login">
-        <div id="loginresult"></div>
-        <input id="username" name="username" type="text" placeholder="Username" autofocus required></br>  
-        <input id="password" name="password" type="password" placeholder="Password" required></br>
-        <button type="submit" id="submit" value="Log in"  class="btn btn-large"> Log In</button></br></br>
-        <a href="">Forgot your password?</a></br>
-        <a href="">Register</a></br>
-</form>
-   
-   
-  </div>
-  </div>
-</div>
-
-
-    <script>
-        /* <![CDATA[ */
-        (function($) {
-            jQuery(function() {
-
-                $('select').selectbox();
-
-                jQuery('#add').click(function(e) {
-                    jQuery(this).parents('div.section').append('<br /><br /><select><option>-- Выберите --</option><option>Пункт 1</option><option>Пункт 2</option><option>Пункт 3</option><option>Пункт 4</option><option>Пункт 5</option></select>');
-                    jQuery('select').selectbox();
-                    e.preventDefault();
-                })
-
-                jQuery('#add2').click(function(e) {
-                    var options = '';
-                    for (i = 1; i <= 5; i++) {
-                        options += '<option>Option ' + i + '</option>';
-                    }
-                    jQuery(this).parents('div.section').find('select').each(function() {
-                        jQuery(this).append(options);
-                    })
-                    jQuery('select').trigger('refresh');
-                    e.preventDefault();
-                })
-
-                jQuery('#che').click(function(e) {
-                    jQuery(this).parents('div.section').find('option:nth-child(5)').attr('selected', true);
-                    jQuery('select').trigger('refresh');
-                    e.preventDefault();
-                })
-
-            })
-        })(jQuery)
-        /* ]]> */
-
-    </script>
     <script>
         /* <![CDATA[ */
         jQuery(document).ready(function(){
@@ -688,51 +488,7 @@ $( document ).ready(function() {
     /* ]]> */
 
 </script>
-<script>
-    /* <![CDATA[ */
-    jQuery(function() {
 
-        var availableTags = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
-        jQuery( "#autocomplete" ).autocomplete({
-            source: availableTags
-        });
-
-        // Hover states on the static widgets
-        jQuery( "#dialog-link, #icons li" ).hover(
-                function() {
-                    jQuery( this ).addClass( "ui-state-hover" );
-                },
-                function() {
-                    jQuery( this ).removeClass( "ui-state-hover" );
-                }
-        );
-    });
-    /* ]]> */
-
-</script>
 <script>
     /* <![CDATA[ */
     function scrollToAnchor(aid){
@@ -825,10 +581,11 @@ $( document ).ready(function() {
 <script src="js/jquery.selectbox.min.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-timepicker.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
 <script src="js/jquery-uii.js"></script>
 <script src="js/contact.js"></script>
 <script src="js/jquery.colorbox.js"></script>
-<script src="js/jquery.placeholder.js"></script>
 <script src="js/jquery.tweet.js"></script>
 <script src="js/jflickrfeed.min.js"></script>
 <script src="js/scripts.js"></script>
@@ -849,32 +606,28 @@ $( document ).ready(function() {
 /*                var value = jQuery(this).slider("option", "value");
                 jQuery(this).find(".ui-slider-handle").text(value+"%");*/
             }
+            
+
         });
 /*        slider.each(function(index){
             var el = slider.get(index);
             var value = jQuery(el).slider("value");
             jQuery(el).slider("value", value);
         });*/
+                    $('.datepicker').datepicker();
+            $('#timepicker1').timepicker();
+            
+            $('input[type=radio]').change(function(e) {
+                if (this.id == 'rfirst') {
+                    $("#amount").val(this.value);
+                } else {
+                    $("#amount").val(this.value);
+                }
+                alert(this.value);
+            });
+            
     });
     /* ]]> */
-</script>
-<script>
-    /* <![CDATA[ */
-    jQuery(document).ready(function(){
-        //Examples of how to assign the Colorbox event to elements
-        jQuery(".group1").colorbox({rel:'nofollow',scalePhotos:'false'});
-
-    });
-    /* ]]> */
-
-</script>
-<script>
-    /* <![CDATA[ */
-    jQuery(function() {
-        jQuery('input, textarea').placeholder();
-    });
-    /* ]]> */
-
 </script>
 <script>
     /* <![CDATA[ */
@@ -888,6 +641,56 @@ $( document ).ready(function() {
             return false;
         });
     });
+                var month=new Array();
+                month[0]="January";
+                month[1]="February";
+                month[2]="March";
+                month[3]="April";
+                month[4]="May";
+                month[5]="June";
+                month[6]="July";
+                month[7]="August";
+                month[8]="September";
+                month[9]="October";
+                month[10]="November";
+                month[11]="December";
+                {{#each mealos}}
+                var time_{{id}} = new Date("{{time}}");
+                var i_{{id}} = time_{{id}}.getDate();
+                
+                var hours_{{id}} = time_{{id}}.getHours();
+                var minutes_{{id}} = time_{{id}}.getMinutes();
+                var ampm_{{id}} = hours_{{id}} >= 12 ? 'pm' : 'am';
+                hours_{{id}} = hours_{{id}} % 12;
+                hours_{{id}} = hours_{{id}} ? hours_{{id}} : 12; // the hour '0' should be '12'
+                minutes_{{id}} = minutes_{{id}} < 10 ? '0'+minutes_{{id}} : minutes_{{id}};
+                var strTime_{{id}} = hours_{{id}} + ':' + minutes_{{id}} + ' ' + ampm_{{id}};
+
+                var maxseat_{{id}} ={{tablesize}};
+                var seat_{{id}} ={{attend}};
+                var left_{{id}} = maxseat_{{id}} - seat_{{id}};
+
+                var m_{{id}} = time_{{id}}.getMonth();
+                var j_{{id}} = i_{{id}} % 10;
+                if (j_{{id}} == 1 && i_{{id}} != 11) {
+                    i_{{id}} = i_{{id}} + "st";
+                }
+                else if (j_{{id}} == 2 && i_{{id}} != 12) {
+                    i_{{id}} = i_{{id}} + "nd";
+                }
+                else if (j_{{id}} == 3 && i_{{id}} != 13) {
+                    i_{{id}} = i_{{id}} + "rd";
+                }
+                else
+                    i_{{id}} = i_{{id}} + "th";
+               
+                $("#mealo_date_{{id}}").html( i_{{id}});
+                $("#mealo_month_{{id}}").html(month[m_{{id}}]);
+                $("#mealo_time_{{id}}").html(strTime_{{id}});
+
+                {{/each}}
+
+    
     /* ]]> */
 </script>
 

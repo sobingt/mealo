@@ -3,13 +3,13 @@ module.exports = {
   facebook: {
     client_id:      '160625610780207',
     client_secret:  'be91a962a85077f202a60ed2dcc89947',
-    scope:      'email, user_about_me, user_birthday, user_location, publish_stream, read_stream, friends_location',
-    redirect_uri:   'http://localhost:3000/'
+    scope:      'email,user_about_me,user_birthday, user_location,publish_stream,read_stream,friends_location',
+    redirect_uri:   'http://localhost:3000/auth/facebook'
   },
   database: {
     host:       'localhost',
     user:       'root',
-    password:   'root1234',
+    password:   'root',
     database:   'mealo'
   },
   mail: {
@@ -29,5 +29,16 @@ module.exports = {
   {
 	url:"http://localhost:",
 	port:3000
-  }	
+  },
+  payment:
+  {
+    key: "C0Dr8m",
+    salt: "3sf0jURk",
+    posturl: "https://test.payu.in/_payment",
+    successurl: "http://localhost:3000/user/103",
+    failureurl: "http://localhost:3000/user/103",
+    offerkey: 123456,
+    apiversion: 2
+  }
+
 };

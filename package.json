@@ -11,6 +11,8 @@
     "mysql": "*",
     "nodemon": "*",
     "crypto": "*",
+    "request": "*",
+    "fbgraph": "*",
 	"googlemaps": "*"
   }
 }
