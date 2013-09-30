@@ -145,7 +145,28 @@ exports.setNewPassword =function(req,res1){
 	res1.render('resetpassword',{uid:uid});
 
 };
+exports.test = function(req, res){
+    console.log("The test");
+};
 
+exports.getuser = function(req, res, next){
+    
+    if (connection) {
+        var queryString = 'SELECT user.uid, fname, lname, email, username FROM token,user WHERE auth_token = ? AND token.uid=user.uid';
+        connection.query(queryString, [req.session.auth_token], function(err, rows, fields) {
+            if (err) throw err;
+            if(rows.length <= 0)
+            {
+                
+            }
+            else
+            {
+                req.userdata=rows[0];
+                next();
+            }
+        });
+    }
+};
 
 exports.auth = function(req, res, next){
     var username = req.body.username;
@@ -164,7 +185,7 @@ exports.auth = function(req, res, next){
             }else
             {
                 
-                res.uid = response[0].uid;
+                req.uid = response[0].uid;
                 next();
             }
             
@@ -181,14 +202,10 @@ exports.auth = function(req, res, next){
     
 };
 
-exports.test = function(req, res){
-    console.log("The test");
-};
-
 exports.hasAuthToken = function(req,res,next){
     if (connection) {
         var queryString = 'SELECT * FROM token where uid = ?';
-        connection.query(queryString, [res.uid], function(err, rows, fields) {
+        connection.query(queryString, [req.uid], function(err, rows, fields) {
             if (err) throw err;
             if(rows.length <= 0)
             {
@@ -198,14 +215,14 @@ exports.hasAuthToken = function(req,res,next){
             {
                 if(req.session.auth_token==rows[0].auth_token)
                 {
-                    res.writeHead(301,{Location: '/user/'+res.uid});
+                    res.writeHead(301,{Location: '/user/'+req.uid});
                     res.end();
                 }
                 else
                 {
                     auth_token = rows[0].auth_token;
                     req.session.auth_token = auth_token;
-                    res.writeHead(301,{Location: '/user/'+res.uid});
+                    res.writeHead(301,{Location: '/user/'+req.uid});
                     res.end();                
                 }
 
@@ -214,7 +231,7 @@ exports.hasAuthToken = function(req,res,next){
     }
 
 };
-
+//app.post('/login', user.auth, user.hasAuthToken, user.requestForAuthToken);
 exports.requestForAuthToken = function(req,res){
     var auth_token = crypto.randomBytes(48).toString('hex');
     if (connection) {
@@ -225,7 +242,7 @@ exports.requestForAuthToken = function(req,res){
             else
             {
                 req.session.auth_token = auth_token;
-                res.writeHead(301,{Location: '/user/'+res.uid});
+                res.writeHead(301,{Location: '/user/'+req.uid});
                 res.end();
             }
         });

@@ -1,0 +1,104 @@
+<div class="create_projects">
+    <div class="row-fluid">
+        <div class="span3">
+            <h4 class="text-center">Step 1: <span class="green">Basic Details</span></h4>
+        </div>
+        <div class="span3 bleft">
+            <h4 class="text-center">Step 2: <span class="green">Select a Restaurant</span></h4>
+        </div>
+        <div class="span3 bleft">
+            <h4 class="text-center">Step 3: <span class="green">Select a Menu</span></h4>
+        </div>
+        <div class="span3 bleft">
+            <h4 class="text-center">Step 4: <span class="green">Agree to Terms</span></h4>
+        </div>
+    </div>
+    <div class="row-fluid border_proj duration">
+        <div class="span3 ">
+            <div class="column_project">
+                <h4 class="text-center">Basic Details:</h4>
+                <form class="form-search" name="createmealo" method="POST" action="/create/mealo" enctype="multipart/form-data">
+                    <input type="text" name="name" class="inputp search-query span12" placeholder="Name" required>
+                    <textarea id="redex2" class="inputp search-query span12" name="description" rows="9" placeholder="Short description" required ></textarea>
+                    <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+                      <input name="date" class="inputp datepicker span12" size="16" required type="text" value="12-02-2012">
+                      <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                    <div name="time"  class="input-append bootstrap-timepicker search-query span12">
+                        <input id="timepicker1" type="text" onchange="updateRestaurant(this.value)" required class="inputp input-small">
+                        <span class="add-on"><i class="icon-time"></i></span>
+                    </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="bleft column_project">
+                <h4 class="text-center">Select a Restaurant</h4>
+                    <select name="cuisine" required class="">
+                        <option>African</option>
+                        <option>Americas</option>
+                        <option>Arab</option>
+                        <option>Asian</option>
+                        <option>Bengal</option>
+                        <option>Caribbean</option>
+                        <option>Central Asian</option>
+                        <option>European</option>
+                        <option>Global</option>
+                        <option>Inuit</option>
+                        <option>Sami</option>
+                        <option>Latin American</option>
+                        <option>Mediterranean</option>
+                        <option>Middle Eastern</option>
+                        <option>North African</option>
+                        <option>South Asian</option>
+                        <option>West African</option>
+                        <option>Afghan</option>
+                        <option>Akan</option>
+                        <option>Albanian</option>
+                        <option>Algerian</option>
+                        <option>American</option>
+                        <option>Andalusian</option>
+                        <option>Angolan</option>
+                        <option>Argentine</option>
+                        <option>Armenian</option>
+                        <option>Australian</option>
+                    </select>
+                    <select class="" name="restaurant"  required id="restaurant"  onChange="getMenu(this.selectedIndex);">
+                        <option>Restaurant</option>
+                      {{#each restaurants}}
+                      <option value ="value{{id}}">{{name}}</option>
+                      {{/each}}
+                    
+                    </select>
+                     
+                    
+                    
+                    <div name="file" class="upload_img inline">
+                        <input type="file" required name="file"/>
+                    </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="bleft column_project">
+                <h4 id="menutimeinfo" class="text-center">Select a Menu:</h4>
+                <input name="menu" id="menuid" type="hidden" class="inputp search-query span12" placeholder="Menu">
+                <input name="amount" id="amount" type="hidden" class="inputp search-query span12" value="" placeholder="Cost">
+                <div id="restaurantmenu" >
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="bleft column_project" >
+                <h4 class="text-center "> Agree to Terms:</h4>
+                <input id="maxguest" max="25" min="3" name="maxguest" step="1" type="number" value="3" required> 
+                <label for = "term">max guest you want to invite</label>
+                <input name="term" id="term" type="checkbox" value="Yes" placeholder="I agree" required>
+                <label for = "term">I agree to the Terms and Condition</label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="decoration text-center create_butt"><span class="nobacgr_whit"><button class="btn btn-large search-query" type="submit"> <span class="butt_small"><strong>CREATE</strong></span></button></span><a name="id_cont"></a></div>
+    </form>
+</div>
+

@@ -35,8 +35,8 @@ module.exports = {
     key: "C0Dr8m",
     salt: "3sf0jURk",
     posturl: "https://test.payu.in/_payment",
-    successurl: "http://localhost:3000/user/103",
-    failureurl: "http://localhost:3000/user/103",
+    successurl: "http://localhost:3000/pay/success",
+    failureurl: "http://localhost:3000/pay/fail",
     offerkey: 123456,
     apiversion: 2
   }

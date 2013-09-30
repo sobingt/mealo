@@ -1,0 +1,28 @@
+
+<div class="container-fluid line contentt login_page">
+   <h1>Log In</h1>
+   <img src="http://vasil-y.com/wp-content/uploads/2012/10/6291334.gif" style="display: none;" id="imgProgress" style="position: absolute; top: 29%;"/>
+   <div id="loginfrm">
+   <div class="outerbtn">
+    <div class="outerfbbtn">
+        <div class="fbbtn">
+            <div  onclick="location.href='/auth/facebook';" class="innerfbbtn">Log in with Facebook</div>
+        </div>
+    </div>
+    </div>
+    <div class="circle">
+    OR
+    </div>
+   <form method="POST" action="/login" id="login">
+        <div id="loginresult">{{error}}</div>
+        <input id="username" name="username" type="text" placeholder="Username" autofocus required></br>  
+        <input id="password" name="password" type="password" placeholder="Password" required></br>
+        <button type="submit" id="submit" value="Log in"  class="btn btn-large"> Log In</button></br></br>
+        <a href="">Forgot your password?</a></br>
+        <a href="">Register</a></br>
+</form>
+   
+   
+  </div>
+  
+</div>

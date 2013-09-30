@@ -90,6 +90,8 @@ hbs.registerHelper("lastIf", function(index_count,mod,block) {
 hbs.registerPartials(__dirname + '/views/partials');
 hbs.registerPartial('headPartial', 'header');
 hbs.registerPartial('searchPartial', 'search');
+hbs.registerPartial('loginPartial', 'login');
+hbs.registerPartial('createmealoPartial', 'createmealo');
 
 
 var access = fs.createWriteStream(__dirname + '/node.access.log', { flags: 'a' })
@@ -178,9 +180,12 @@ app.use(express.bodyParser({ keepExtensions: true, uploadDir: __dirname + "/publ
 
 app.post('/search', routes.search);
 app.get('/invoice', invoice.invoice);
+app.get('/create/mealo',routes.mealos,routes.restaurants,routes.index);
 
-//app.get('/create', upload.uploadFile, upload.addPhoto)
-app.post('/', routes.uploadfile, routes.createmealo, invoice.createinvoice, invoice.createinvoice, invoice.invoice/*, put.createmealo*/);
+app.post('/create/mealo',user.getuser, routes.uploadfile, routes.createmealo, invoice.createinvoice, invoice.invoice);
+app.post('/pay/mealo', user.getuser, payment.pay);
+app.post('/pay/success', payment.success);
+app.post('/pay/fail', payment.fail);
 
 app.get('/mealo', mealo.index);
 app.get('/mealo/:id',get.getMealo,get.getAttendes,get.getRole,mealo.mealo);

@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
 exports.index = function(req, res){
 console.log(req.mealos);
 console.log(req.restaurants);
-res.render('index', { title: 'Express',mealos : req.mealos,restaurants : req.restaurants });
+res.render('index', { auth_token: req.session.auth_token ,mealos : req.mealos,restaurants : req.restaurants });
 };
 
 exports.mealos = function(req, res, next){
@@ -97,7 +97,8 @@ exports.uploadfile = function(req, res, next){
     }
     else
     {
-        next();
+        res.redirect(301, '/#id_reg');
+		res.end();
     }
 };
 
@@ -114,7 +115,8 @@ exports.createmealo = function(req, res, next){
      req.date = date;
      var data = new Array();
      data[0] = {};
-     data[0]['uid']=1;
+     data[0]['uid']=req.userdata.uid;
+     data[0]['fname']=req.userdata.fname;
      data[0]['mealoname']=req.body.name;
      data[0]['description'] =req.body.description;
      data[0]['date'] =date;
@@ -124,13 +126,22 @@ exports.createmealo = function(req, res, next){
      data[0]['restaurant'] =parseInt(req.body.restaurant);
      data[0]['menu'] =parseInt(req.body.menu);
      data[0]['uploadfile'] =req.uploadfile;
-     req.jsondata=data;
-     console.log("HTML");
-     console.log(req.body);
-     console.log("HTML");
-     console.log(req.jsondata);
-     next();
-     
+    
+    var queryString="INSERT INTO mealo (id, name, menuId, tablesize, time, created, uid, description, images, status) VALUES (NULL, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?, ?, 'incomplete');";
+	connection.query(queryString,[req.body.name,data[0]['menu'],data[0]['maxguest'],data[0]['date'], data[0]['uid'],data[0]['description'],data[0]['uploadfile']],function(err, rows) {
+        if (err) 
+        {
+            throw err;
+        }
+        else
+		{
+            data[0]['mealoid']=rows.insertId;
+            req.jsondata=data;
+            next();
+        }
+
+
+    });
  };
  
 exports.prepaymealo = function(req, res, next){

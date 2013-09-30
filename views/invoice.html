@@ -11,16 +11,16 @@
     <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,200,300' rel='stylesheet' type='text/css'>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/jquery-ui.css" rel="stylesheet">
-    <link href="css/resp.css" rel="stylesheet">
-    <link href="css/bootstrap-timepicker.min.css" rel="stylesheet">
-    <link href="css/colorbox.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/jquery-ui.css" rel="stylesheet">
+    <link href="/css/resp.css" rel="stylesheet">
+    <link href="/css/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="/css/colorbox.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="favicon.html" />
-    <link rel="apple-touch-icon" href="img/touch-icon.html" />
-    <link rel="image_src" href="img/touch-icon.html" />
+    <link rel="apple-touch-icon" href="/img/touch-icon.html" />
+    <link rel="image_src" href="/img/touch-icon.html" />
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -48,7 +48,7 @@
     </style>
     <![endif]-->
 
-    <script src="js/jquery.js"></script>
+    <script src="/js/jquery.js"></script>
     <script type="text/javascript">
     
 $( document ).ready(function() {
@@ -129,15 +129,17 @@ $( document ).ready(function() {
 
 
     <section class="invoice-financials">
-            <form class="form-invoice" name="invoice" method="POST" action="#" enctype="multipart/form-data">
-    <input name="transid" type="hidden" value="sss">
-    <input name="amount" type="hidden" value="sss">
-    <input name="productinfo" type="hidden" value="sss">
-    <input name="firstname" type="hidden" value="sss">
-    <input name="uid" type="hidden" value="sss">
-    <input name="hashKey" type="hidden" value="sss">
-    <input name="mobile" type="hidden" value="sss">
-            {{#each data}}
+    <form class="form-invoice" name="invoice" method="POST" action="/pay/mealo" enctype="multipart/form-data">
+              {{#each data}}
+    <input name="transid" type="hidden" value="{{transid}}">
+    <input name="amount" type="hidden" value="{{amount}}">
+    <input name="productinfo" type="hidden" value="{{mealoname}}">
+    <input name="firstname" type="hidden" value="{{fname}}">
+    <input name="uid" type="hidden" value="{{uid}}">
+    <input name="mealoid" type="hidden" value="{{mealoid}}">
+    <input name="image" type="hidden" value="{{uploadfile}}">
+   
+  
 		<div class="invoice-items">
 			<table>
 				<caption>Invoice Details</caption>
@@ -182,7 +184,9 @@ $( document ).ready(function() {
 			</table>
 
 		</div><!-- e: invoice totals -->
+         <input name="mobile" type="text" required placeholder="Enter your mobile number">
            {{/each}}
+               <div class="decoration text-center create_butt"><span class="nobacgr_whit"><button class="btn btn-large search-query" type="submit"> <span class="butt_small"><strong>PAY BY CREDIT / DEBIT CARD</strong></span></button></span><a name="id_cont"></a></div>
     </form>
 	</section>
      
@@ -198,9 +202,9 @@ $( document ).ready(function() {
               <div class="fleft">© All Rights Reserved. .</div>
               <div class="fright">
                 <ul id="social_b" class="socialbott inline">
-                    <li><a href="https://twitter.com/" target="_blank" original-title="twitter"><img src="img/social/icon_footer_face.png" alt=""></a></li>
-                    <li><a href="https://plus.google.com/" target="_blank" original-title="googleplus"><img src="img/social/icon_footer_g.png" alt=""></a></li>
-                    <li><a href="https://www.facebook.com/" title="facebook" target="_blank"><img src="img/social/icon_footer_tw.png" alt=""></a></li>
+                    <li><a href="https://twitter.com/" target="_blank" original-title="twitter"><img src="/img/social/icon_footer_face.png" alt=""></a></li>
+                    <li><a href="https://plus.google.com/" target="_blank" original-title="googleplus"><img src="/img/social/icon_footer_g.png" alt=""></a></li>
+                    <li><a href="https://www.facebook.com/" title="facebook" target="_blank"><img src="/img/social/icon_footer_tw.png" alt=""></a></li>
 
                 </ul>
               </div>
@@ -209,18 +213,18 @@ $( document ).ready(function() {
     </div>
 </div>
 
-<script src="js/jquery.selectbox.min.js"></script>
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/bootstrap-timepicker.min.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>
-<script src="js/jquery-uii.js"></script>
-<script src="js/contact.js"></script>
-<script src="js/jquery.colorbox.js"></script>
-<script src="js/jquery.tweet.js"></script>
-<script src="js/jflickrfeed.min.js"></script>
-<script src="js/scripts.js"></script>
-<script src="js/main.js"></script>
+<script src="/js/jquery.selectbox.min.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/bootstrap-timepicker.min.js"></script>
+<script src="/js/bootstrap-datepicker.js"></script>
+<script src="/js/jquery-uii.js"></script>
+<script src="/js/contact.js"></script>
+<script src="/js/jquery.colorbox.js"></script>
+<script src="/js/jquery.tweet.js"></script>
+<script src="/js/jflickrfeed.min.js"></script>
+<script src="/js/scripts.js"></script>
+<script src="/js/main.js"></script>
 
 </body>
 </html>
