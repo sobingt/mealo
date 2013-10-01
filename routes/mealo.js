@@ -8,7 +8,11 @@ exports.index = function(req, res){
 };
 
 exports.mealo = function(req,res1) {
-            res1.render('singlemealo', {restdata1:res1.response1,restdata2:res1.response2,url : req.url});
+			//console.log(res1.response1);
+			//console.log(res1.response2);
+			//console.log(req.userdata);
+			console.log(req.mealoRole);
+            res1.render('singlemealo', {restdata1:res1.response1,restdata2:res1.response2,userdata:req.userdata,mealorole:req.mealoRole,url : req.url});
 
 
 };

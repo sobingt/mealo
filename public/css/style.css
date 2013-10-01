@@ -1597,8 +1597,8 @@ div.upload_pic3 input {
 #author_review #face_social_text .left_face_social_text .pix_author
 {
     /*background-color: #9e9e9e;*/
-    background: url("../img/doe.jpg") no-repeat;
-/*width: 142px;*/
+    
+width: 142px;
 height: 142px;
 margin: 3px;
 }

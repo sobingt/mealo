@@ -1,9 +1,10 @@
-{{#each restdata1}}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Mealo - {{name}}</title>
+	{{#each restdata1}}
+    <title>Mealo - {{name}}</title>{{/each}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -23,7 +24,6 @@
         height: 320px;
       }
     </style>
-	{{/each}}
 	<script>
 	
 			{{#each restdata1}}
@@ -178,18 +178,13 @@
 
 
 <div class="tabbable" style="margin-bottom: 18px;">
-    <div id="tabs_pages">
-        <ul class=" tabs_pages_ul row-fluid">
-            <li class="active span4"><a href="#tab1" data-toggle="tab">DESCRIPTION</a></li>
-        </ul>
-    </div>
     <div class="tab-content" style="padding-bottom: 9px;">
         <div class="tab-pane active" id="tab1">
             <div id="description_content">
 			
-                <div class="title_description_content">{{description}}</div>
-                <div class="text_description_content">{{menu}}</div>
-                <div class="text_description_content"> {{restaurant}}</div>
+                <div class="title_description_content">Description<br/>{{description}}</div>
+                <div class="text_description_content"><img src="{{menu}}" height="476" width="643" ></div>
+                <div class="text_description_content">Restaurant<br/>{{restaurant}}</div>
                 <div class="text_description_content">{{restaurantdesc}}</div>				
             </div>
 			<div class="edit_test">
@@ -217,7 +212,7 @@
     <h3 class="decoration text-center"><span class="nobacgr">Host</span></h3>
     <div id="face_social_text">
         <div class="left_face_social_text span4">
-            <div class="face_big span9"><div class="pix_author"></div></div>
+            <div class="face_big span9"><div class="pix_author" style="background: url('{{profileimg}}');background-repeat:no-repeat;background-size:133px 140px; margin:3px"></div></div>
             <div class="social_link_author">
                 <div class="social_bord"><a href="#" >
                     <img class="social_decc" src="/img/description/facebook_author_icon.png" alt="">
@@ -231,7 +226,7 @@
             </div>
         </div>
         <div class="right_face_social_text span8">
-            <div class="name_surname">Sobin George Thomas</div>
+            <div class="name_surname">{{fname}}</div>
             <div class="text_author_right">.</div>
         </div>
     </div>
@@ -497,9 +492,11 @@ $(document).ready( function(){
 					var classrole2=$(".payment_getaway_button");
 					var classrole3=$(".payment_cost");
 					var classrole4=$(".your_card");
-					var role="{{role}}";
+					var role="{{mealorole}}";
+					//alert(role);
+					//classrole.html(role);
 					{{#each restdata1}}
-				if(role=="creator")
+				if(role=="Creator")
 				{
 					//alert("creator");
 					classrole.html('<button class="btn btn-large make_payment" type="button"><small>Edit Mealo</small></button>');
@@ -507,7 +504,7 @@ $(document).ready( function(){
 					classrole3.html('Want to cancel');
 					classrole4.html('cancel??');
 				}
-				else if(role=="attende")
+				else if(role=="Cancel")
 				{
 					//alert("Not a creator");
 					classrole3.html('<button class="btn btn-large make_payment" type="button"><small>Cancel Mealo</small></button>');
@@ -516,18 +513,11 @@ $(document).ready( function(){
 					
 				}
 				{{#each cost}}
-				else if(role=="registeredmember")
+				else if(role=="Book")
 				{
 						classrole3.html('Rs.'+'{{Veg}}');
 						classrole4.html('<h3>Choose Your Meal:</h3><ul class="choose"><li><input id="rfirst" type="radio" name="radio" checked hidden/><label for="rfirst">Veg:Rs. '+'{{Veg}}'+'</label></li><li><input id="rsecond" type="radio" name="radio" hidden /><label  for="rsecond">Non Veg:Rs .'+'{{Nonveg}}'+'</label></li></ul>');
 						classrole2.html('<button class="btn btn-large make_payment" type="button"><small>Book Mealo</small></button>');
-				}
-				else if(role=="unregistered")
-				{
-						classrole3.html('Rs.');
-						classrole4.html('<h3>Choose Your Meal:</h3><ul class="choose"><li><input id="rfirst" type="radio" name="radio" checked hidden/><label for="rfirst">Veg:Rs. '+'{{Veg}}'+'</label></li><li><input id="rsecond" type="radio" name="radio" hidden /><label  for="rsecond">Non Veg:Rs .'+'{{Nonveg}}'+'</label></li></ul>');
-						classrole2.html('<button class="btn btn-large make_payment" type="button"><small>Book Mealo</small></button>');
-				
 				}
 		});	
 </script>

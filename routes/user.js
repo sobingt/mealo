@@ -20,7 +20,31 @@ exports.list = function(req, res){
 
 exports.profile = function(req, res){
     var id = req.params.id;
-    res.render('userprofile');
+	var same="visitor";
+	if(typeof req.userdata !== "undefined"){
+	//console.log("in if");
+	var visitor=req.userdata[0].uid;
+	//console.log(visitor);
+	//console.log("id is"+id);
+	if(visitor==id)
+		same="owner";
+	//console.log(same);
+	//console.log(id);
+	}
+	if (connection) {
+    
+        var queryString = 'SELECT fname,lname,email,phone,profileimg FROM USER where uid=?;'
+        connection.query(queryString,[id], function(err, rows, fields) {
+            if (err) throw err;
+            else
+            {
+                req.userdetails=rows;
+				//console.log(rows);
+				res.render('userprofile',{userdetail:req.userdetails,role:same});
+            }
+        });
+    }
+	
 };
 
 exports.login = function(req, res1){
@@ -152,16 +176,16 @@ exports.test = function(req, res){
 exports.getuser = function(req, res, next){
     
     if (connection) {
-        var queryString = 'SELECT user.uid, fname, lname, email, username FROM token,user WHERE auth_token = ? AND token.uid=user.uid';
+        var queryString = 'SELECT user.uid, fname, lname, email, username,role FROM token,user WHERE auth_token = ? AND token.uid=user.uid';
         connection.query(queryString, [req.session.auth_token], function(err, rows, fields) {
             if (err) throw err;
             if(rows.length <= 0)
             {
-                
+                next();
             }
             else
             {
-                req.userdata=rows[0];
+                req.userdata=rows;
                 next();
             }
         });

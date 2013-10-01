@@ -113,7 +113,7 @@ exports.allRestaurantMenuType = function(req, res){
 exports.mealo = function(req, res){
     var id = req.params.id;
     if (connection) {
-        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant,r.description as restaurantdesc, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost,u.profileimg FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a,user u) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid AND mealo.uid=u.uid WHERE mealo.id = ?';
+        var queryString = 'SELECT mealo.id, mealo.name, mealo.menuId, mealo.tablesize, mealo.time, mealo.created, mealo.uid, mealo.description, m.restId, m.menu, m.type, r.name AS restaurant,r.description as restaurantdesc, r.locationId, r.email, r.phone, r.cityId, r.maxTableSize, r.cuisine, r.picture, r.note, g.latitude, g.longitude, a.attend, m.cost,u.profileimg,u.fname FROM mealo LEFT JOIN (menu m, restaurant r, geolocation g, attendance a,user u) ON mealo.menuId = m.id AND r.id = m.restId AND r.locationId = g.id AND mealo.id = a.mealid AND mealo.uid=u.uid WHERE mealo.id = ?';
         connection.query(queryString, [id], function(err, rows, fields) {
             if (err) throw err;
             res.contentType('application/json');
@@ -363,18 +363,81 @@ var id = req.params.id;
 
 };
 
-exports.getRole=function(req,res1,next) {
-	//var uid=res1.uid;
-	//res1.response1=res1.response1;
-	//res1.response2=res1.response2;
-	//console.log(res1.response1);
-    //console.log(res1.response2);
-	console.log("inside get roleeeee");
-	var creatorid=res1.response1[0].uid;
-	console.log(creatorid);
-	var role="";
-	role="registeredmember";
-	res1.response3=role;
-	next();
+exports.isAttende=function(req,res1,next) {
+	if(typeof req.userdata !== "undefined")
+	{
+		var mealoid=res1.response1[0].id;
+		var uidd=req.userdata[0].uid;
+		//console.log(mealoid);
+		console.log(uidd);
+		//var mealoRole="";
+		if (connection) {
+			var queryString = 'SELECT uid  FROM participant WHERE mealoid=? and uid=?;';
+			
+			connection.query(queryString,[mealoid,uidd],function(err, rows) {
+				if (err) throw err;
+				else
+				{
+					if(rows.length <=0)
+					{
+						req.mealoRole="Book";
+						//console.log(req.mealoRole);
+						next();
+					}
+					else
+					{
+						req.mealoRole="Cancel";
+						//console.log(req.mealoRole);
+						next();
+					}
+				}
+			});
+		}
+	}
+	else
+	{
+		req.mealoRole="Book";
+		next();
+	}
+	
 
+};
+
+exports.isCreator=function(req,res1,next) {
+
+	if(typeof req.userdata !== "undefined")
+	{
+		var mealoRole=req.mealoRole;
+		var mealoId=res1.response1[0].id;
+		var uid=req.userdata[0].uid;
+		console.log(req.mealoRole);
+		
+		if(connection){
+		var queryString = 'SELECT uid  FROM mealo WHERE id=? and uid=?;';
+			
+			connection.query(queryString,[mealoId,uid],function(err, rows) {
+				if (err) throw err;
+				else
+				{
+					if(rows.length <=0)
+					{
+						next();
+					}
+					else
+					{
+						req.mealoRole="Creator";
+						next();
+						console.log("in creator");
+					}
+				}
+			});
+		}
+		
+			
+	}
+	else
+	{
+		req.mealoRole="Book";
+		next();
+	}
 };

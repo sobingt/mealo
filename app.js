@@ -188,7 +188,7 @@ app.post('/pay/success', payment.success);
 app.post('/pay/fail', payment.fail);
 
 app.get('/mealo', mealo.index);
-app.get('/mealo/:id',get.getMealo,get.getAttendes,get.getRole,mealo.mealo);
+app.get('/mealo/:id',get.getMealo,get.getAttendes,user.getuser,get.isAttende,get.isCreator,mealo.mealo);
 
 app.get('/mealo/:id/failed', mealo.mealo);
 app.get('/mealo/:id/booking'/*,user.isAuthed*/, mealo.bookingmealo);
@@ -196,7 +196,7 @@ app.get('/mealo/:id/booked', mealo.bookedmealo);
 app.get('/:city/mealo/new', mealo.createmealo);
 app.post('/:city/mealo/new', mealo.createmealopost);
 app.get('/users', user.list);
-app.get('/user/:id', user.profile);
+app.get('/user/:id',user.getuser,user.profile);
 app.get('/about', function(req, res) {
    res.render('about', {title:"About Me"});
 });
